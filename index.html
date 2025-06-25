@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceHub - Marketplace for Services</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link active">Home</a>
+                    <a href="profile.html" class="nav-link">Profile</a>
+                    <a href="register.html" class="nav-link">Join</a>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search services..." class="search-input">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="main-content">
+                <!-- Left Sidebar - Filters -->
+                <aside class="sidebar-left">
+                    <div class="filter-section">
+                        <h3>Filters</h3>
+                        
+                        <div class="filter-group">
+                            <h4>Countries</h4>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="checkbox" name="country" value="usa"> USA
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="country" value="uk"> United Kingdom
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="country" value="canada"> Canada
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="country" value="australia"> Australia
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="country" value="germany"> Germany
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Categories</h4>
+                            <div class="filter-options">
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="design"> Design
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="development"> Development
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="marketing"> Marketing
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="writing"> Writing
+                                </label>
+                                <label class="filter-option">
+                                    <input type="checkbox" name="category" value="translation"> Translation
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h4>Price Range</h4>
+                            <div class="price-range">
+                                <input type="range" id="priceRange" min="0" max="1000" value="500">
+                                <div class="price-display">$<span id="priceValue">500</span></div>
+                            </div>
+                        </div>
+
+                        <button class="filter-clear">Clear Filters</button>
+                    </div>
+                </aside>
+
+                <!-- Main Content Area -->
+                <div class="content-area">
+                    <!-- Video Stories Section -->
+                    <section class="stories-section">
+                        <h2>Featured Stories</h2>
+                        <div class="stories-container">
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Success Story #1</span>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Tutorial</span>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Tips & Tricks</span>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Behind Scenes</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Service Providers Grid -->
+                    <section class="services-section">
+                        <div class="section-header">
+                            <h2>Top Service Providers</h2>
+                            <div class="sort-options">
+                                <select id="sortSelect">
+                                    <option value="rating">Sort by Rating</option>
+                                    <option value="price">Sort by Price</option>
+                                    <option value="reviews">Sort by Reviews</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div id="servicesGrid" class="services-grid">
+    <!-- Карточка 1 -->
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/5.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+<div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/4.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/3.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/2.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/5.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/4.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/3.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/2.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/5.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/3.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/2.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/4.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+
+    <!-- Карточка 2 -->
+    <div class="service-card" onclick="openServiceDetails(2)" data-country="canada" data-category="development" data-price="800" data-rating="5.0" data-reviews="89">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Mike Chen</h4>
+                <div class="provider-location">Toronto, Canada</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 2</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">★★★★★</span>
+            <span class="rating-text">5.0 (89)</span>
+        </div>
+        <div class="service-price">$800</div>
+    </div>
+</div>
+
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/2.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/5.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/4.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/3.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/2.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/5.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/3.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/2.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/4.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+    <div class="service-card" onclick="openServiceDetails(1)" data-country="usa" data-category="design" data-price="50" data-rating="4.9" data-reviews="127">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Sarah Johnson</h4>
+                <div class="provider-location">New York, USA</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 1</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 2</span>
+            <span class="service-tag">Tag 3</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">
+                <span class="rating-stars">★★★★★</span>
+                <span class="rating-text">4.9 (127)</span>
+            </div>
+            <div class="service-price">$50</div>
+        </div>
+    </div>
+
+    <!-- Карточка 2 -->
+    <div class="service-card" onclick="openServiceDetails(2)" data-country="canada" data-category="development" data-price="800" data-rating="5.0" data-reviews="89">
+        <div class="service-provider">
+            <div class="provider-avatar"><img src="img/1.jpg" alt=""></div>
+            <div class="provider-info">
+                <h4>Mike Chen</h4>
+                <div class="provider-location">Toronto, Canada</div>
+            </div>
+        </div>
+        <h3 class="service-title">Service 2</h3>
+        <p class="service-description">High-quality service tailored to your needs.</p>
+        <div class="service-tags">
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag 1</span>
+            <span class="service-tag">Tag</span>
+        </div>
+        <div class="service-footer">
+            <div class="service-rating">★★★★★</span>
+            <span class="rating-text">5.0 (89)</span>
+        </div>
+        <div class="service-price">$800</div>
+    </div>
+</div>
+
+
+</div>
+                        
+                        <div class="loading" id="loadingIndicator" style="display: none;">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right Sidebar - Banners -->
+                <aside class="sidebar-right">
+                    <div class="banner-section">
+                        <div class="banner">
+                            <h4>Premium Services</h4>
+                            <p>Get access to exclusive high-quality services</p>
+                            <button class="banner-btn">Learn More</button>
+                        </div>
+                        
+                        <div class="banner">
+                            <h4>Become a Seller</h4>
+                            <p>Start earning by offering your skills</p>
+                            <button class="banner-btn">Get Started</button>
+                        </div>
+                        
+                        <div class="banner">
+                            <h4>Special Offer</h4>
+                            <p>50% off your first purchase</p>
+                            <button class="banner-btn">Claim Now</button>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ServiceHub</h4>
+                    <p>Your trusted marketplace for professional services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
