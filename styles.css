@@ -176,7 +176,7 @@ body {
     position: sticky;
     top: 100px;
     max-height: calc(100vh - 120px);
-    overflow-y: auto;
+/*     overflow-y: auto; */
 }
 
 .filter-section h3 {
