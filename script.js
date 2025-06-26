@@ -103,3 +103,29 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => card.classList.add('visible'), index * 50);
     });
 });
+
+
+
+
+
+
+
+
+function toggleFilters() {
+    const filterContent = document.querySelector('.filter-content');
+    const filterToggle = document.querySelector('.filter-toggle');
+    
+    filterContent.classList.toggle('open');
+    filterToggle.classList.toggle('open');
+}
+
+
+
+
+
+
+
+
+
+
+
