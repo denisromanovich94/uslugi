@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join ServiceHub - Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .register-hero {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .register-content {
+            padding: 3rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .register-tabs {
+            display: flex;
+            background: var(--background-secondary);
+            border-radius: 12px;
+            padding: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .tab-button {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .tab-content {
+            background: var(--background-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--background-primary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--background-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .register-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .register-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .benefits-section {
+            margin-top: 3rem;
+            background: var(--background-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .benefit-item {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .register-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="profile.html" class="nav-link">Profile</a>
+                    <a href="register.html" class="nav-link active">Join</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="register-hero">
+        <div class="container">
+            <h1>Join ServiceHub Today</h1>
+            <p>Start your journey as a buyer or service provider</p>
+        </div>
+    </section>
+
+    <main class="main">
+        <div class="container">
+            <div class="register-content">
+                <div class="register-tabs">
+                    <button class="tab-button active" onclick="switchTab('buyer')">Register as Buyer</button>
+                    <button class="tab-button" onclick="switchTab('seller')">Register as Service Provider</button>
+                </div>
+
+                <!-- Buyer Registration -->
+                <div id="buyerTab" class="tab-content">
+                    <h2>Create Your Buyer Account</h2>
+                    <form id="buyerForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-input" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Login *</label>
+                                <input type="text" class="form-input" name="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-input" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-input" name="password" required>
+                        </div>
+                        
+                        
+                    
+                        <div class="form-group">
+                            <label class="form-label">Country *</label>
+                            <select class="form-select" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="usa">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="canada">Canada</option>
+                                <option value="australia">Australia</option>
+                                <option value="germany">Germany</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="register-btn">Create Buyer Account</button>
+                    </form>
+                </div>
+
+                <div id="sellerTab" class="tab-content" style="display: none;">
+                    <h2>Create Your Service Provider Account</h2>
+                    <form id="sellerForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label class="form-label">First Name *</label>
+                                <input type="text" class="form-input" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Login *</label>
+                                <input type="text" class="form-input" name="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email Address *</label>
+                            <input type="email" class="form-input" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-input" name="password" required>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        <div class="form-group">
+                            <label class="form-label">Country *</label>
+                            <select class="form-select" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="usa">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="canada">Canada</option>
+                                <option value="australia">Australia</option>
+                                <option value="germany">Germany</option>
+                            </select>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        <button type="submit" class="register-btn">Create Service Provider Account</button>
+                    </form>
+                </div>
+
+                <!-- Benefits Section -->
+                <div class="benefits-section">
+                    <h2>Why Choose ServiceHub?</h2>
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🛡️</div>
+                            <h4>Secure Payments</h4>
+                            <p>Your transactions are protected with bank-level security</p>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">🌟</div>
+                            <h4>Quality Assurance</h4>
+                            <p>All service providers are verified and rated by customers</p>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">📞</div>
+                            <h4>24/7 Support</h4>
+                            <p>Our customer support team is always here to help</p>
+                        </div>
+                        <div class="benefit-item">
+                            <div class="benefit-icon">💰</div>
+                            <h4>Competitive Pricing</h4>
+                            <p>Find the best value for your budget with transparent pricing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ServiceHub</h4>
+                    <p>Your trusted marketplace for professional services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Tab switching
+        function switchTab(tab) {
+            const buyerTab = document.getElementById('buyerTab');
+            const sellerTab = document.getElementById('sellerTab');
+            const tabButtons = document.querySelectorAll('.tab-button');
+            
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            if (tab === 'buyer') {
+                buyerTab.style.display = 'block';
+                sellerTab.style.display = 'none';
+                tabButtons[0].classList.add('active');
+            } else {
+                buyerTab.style.display = 'none';
+                sellerTab.style.display = 'block';
+                tabButtons[1].classList.add('active');
+            }
+        }
+
+        // Form submission
+        function handleFormSubmit(event, type) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            console.log(`${type} registration data:`, data);
+            alert(`Registration successful! Welcome to ServiceHub as a ${type}.`);
+            
+            // In a real application, this would send data to a server
+        }
+
+        // Initialize
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('buyerForm').addEventListener('submit', (e) => handleFormSubmit(e, 'buyer'));
+        document.getElementById('sellerForm').addEventListener('submit', (e) => handleFormSubmit(e, 'service provider'));
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+</body>
+</html>

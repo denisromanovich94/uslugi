@@ -121,6 +121,26 @@ function toggleFilters() {
 
 
 
+function toggleAdvancedFilters() {
+    const filterContent = document.querySelector('.advanced-filters .filter-content');
+    const filterToggle = document.querySelector('.advanced-filters .filter-toggle-advanced');
+    
+    filterContent.classList.toggle('open');
+    filterToggle.classList.toggle('open');
+}
+
+document.querySelector('.filter-toggle-advanced').addEventListener('click', toggleAdvancedFilters);
+
+
+
+
+
+
+
+
+
+
+
 
 
 

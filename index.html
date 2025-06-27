@@ -36,7 +36,8 @@
                 <aside class="sidebar-left">
                     <div class="filter-section">
     <div class="filter-header">
-        <h3>Filters</h3>
+        <h3 class="mobile-flex">Country / price filter</h3>
+        <h3 class="desktop-flex">Filters</h3>
         <button class="filter-toggle" aria-label="Toggle filters" onclick="toggleFilters()">
             <span class="filter-toggle-icon">
 
@@ -59,49 +60,8 @@
     </div>
     
     <div class="filter-content">
-        <div class="filter-group">
-            <h4>Countries</h4>
-            <div class="filter-options">
-                <label class="filter-option">
-                    <input type="checkbox" name="country" value="usa"> USA
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="country" value="uk"> United Kingdom
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="country" value="canada"> Canada
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="country" value="australia"> Australia
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="country" value="germany"> Germany
-                </label>
-            </div>
-        </div>
 
-        <div class="filter-group">
-            <h4>Categories</h4>
-            <div class="filter-options">
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="professional-service"> Design
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="development"> Development
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="marketing"> Marketing
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="writing"> Branding
-                </label>
-                <label class="filter-option">
-                    <input type="checkbox" name="category" value="translation"> Translation
-                </label>
-            </div>
-        </div>
-
-        <div class="filter-group">
+<div class="filter-group">
             <h4>Price Range</h4>
             <div class="price-range">
                 <input type="range" id="priceRange" name="priceRange" min="0" max="1000" value="500">
@@ -109,17 +69,286 @@
             </div>
         </div>
 
+
+
+        <div class="filter-group">
+    <h4>Countries</h4>
+    <div class="filter-options">
+        <label class="filter-option"><input type="checkbox" name="country" value="afghanistan"> Afghanistan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="albania"> Albania</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="algeria"> Algeria</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="andorra"> Andorra</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="angola"> Angola</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="argentina"> Argentina</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="armenia"> Armenia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="australia"> Australia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="austria"> Austria</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="azerbaijan"> Azerbaijan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="bahamas"> Bahamas</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="bahrain"> Bahrain</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="bangladesh"> Bangladesh</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="belarus"> Belarus</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="belgium"> Belgium</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="belize"> Belize</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="benin"> Benin</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="bhutan"> Bhutan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="bolivia"> Bolivia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="bosnia"> Bosnia & Herzegovina</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="botswana"> Botswana</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="brazil"> Brazil</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="brunei"> Brunei</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="bulgaria"> Bulgaria</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="burkina-faso"> Burkina Faso</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="burundi"> Burundi</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="cambodia"> Cambodia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="cameroon"> Cameroon</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="canada"> Canada</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="chile"> Chile</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="china"> China</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="colombia"> Colombia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="congo"> Congo</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="croatia"> Croatia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="cuba"> Cuba</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="cyprus"> Cyprus</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="czechia"> Czechia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="denmark"> Denmark</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="dominican-republic"> Dominican Republic</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="egypt"> Egypt</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="estonia"> Estonia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="ethiopia"> Ethiopia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="finland"> Finland</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="france"> France</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="gabon"> Gabon</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="georgia"> Georgia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="germany"> Germany</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="ghana"> Ghana</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="greece"> Greece</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="guatemala"> Guatemala</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="haiti"> Haiti</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="hong-kong"> Hong Kong</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="hungary"> Hungary</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="iceland"> Iceland</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="india"> India</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="indonesia"> Indonesia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="iran"> Iran</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="iraq"> Iraq</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="ireland"> Ireland</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="israel"> Israel</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="italy"> Italy</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="jamaica"> Jamaica</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="japan"> Japan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="jordan"> Jordan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="kazakhstan"> Kazakhstan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="kenya"> Kenya</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="korea-south"> South Korea</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="kuwait"> Kuwait</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="kyrgyzstan"> Kyrgyzstan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="laos"> Laos</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="latvia"> Latvia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="lebanon"> Lebanon</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="libya"> Libya</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="lithuania"> Lithuania</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="luxembourg"> Luxembourg</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="malaysia"> Malaysia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="mexico"> Mexico</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="moldova"> Moldova</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="monaco"> Monaco</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="mongolia"> Mongolia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="morocco"> Morocco</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="mozambique"> Mozambique</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="myanmar"> Myanmar</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="namibia"> Namibia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="nepal"> Nepal</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="netherlands"> Netherlands</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="new-zealand"> New Zealand</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="nigeria"> Nigeria</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="norway"> Norway</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="pakistan"> Pakistan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="panama"> Panama</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="paraguay"> Paraguay</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="peru"> Peru</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="philippines"> Philippines</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="poland"> Poland</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="portugal"> Portugal</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="qatar"> Qatar</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="romania"> Romania</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="russia"> Russia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="rwanda"> Rwanda</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="saudi-arabia"> Saudi Arabia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="senegal"> Senegal</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="serbia"> Serbia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="singapore"> Singapore</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="slovakia"> Slovakia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="slovenia"> Slovenia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="somalia"> Somalia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="south-africa"> South Africa</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="spain"> Spain</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="sri-lanka"> Sri Lanka</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="sudan"> Sudan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="sweden"> Sweden</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="switzerland"> Switzerland</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="syria"> Syria</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="taiwan"> Taiwan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="tajikistan"> Tajikistan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="tanzania"> Tanzania</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="thailand"> Thailand</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="tunisia"> Tunisia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="turkey"> Turkey</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="turkmenistan"> Turkmenistan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="uganda"> Uganda</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="ukraine"> Ukraine</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="uae"> United Arab Emirates</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="uk"> United Kingdom</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="usa"> United States</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="uruguay"> Uruguay</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="uzbekistan"> Uzbekistan</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="venezuela"> Venezuela</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="vietnam"> Vietnam</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="yemen"> Yemen</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="zambia"> Zambia</label>
+        <label class="filter-option"><input type="checkbox" name="country" value="zimbabwe"> Zimbabwe</label>
+    </div>
+</div>
+
+        
+
         <button class="filter-clear">Clear Filters</button>
     </div>
+
+
 </div>
                 </aside>
 
                 <!-- Main Content Area -->
                 <div class="content-area">
-                    <!-- Video Stories Section -->
+
+
+
+
+
+<div class="advanced-filters">
+    <div class="filter-header">
+        <h3 class="mobile-flex">Filters</h3>
+        
+        <button class="filter-toggle-advanced">
+            <span class="filter-toggle-icon">
+                <svg class="gear-icon" data-theme="dark" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 512 512"><path fill-rule="nonzero" d="M502.213 512H0V0h512v512h-9.787zM339.956 255.211a20.122 20.122 0 00-5.866-14.235 20.188 20.188 0 00-14.235-5.867 20.074 20.074 0 00-20.102 20.102c0 5.546 2.256 10.6 5.879 14.223 3.599 3.624 8.664 5.879 14.223 5.879a20.118 20.118 0 0014.235-5.867 20.12 20.12 0 005.866-14.235zm7.95-28.026a39.889 39.889 0 0110.39 18.24h35.274v19.572h-35.274c-1.787 7.001-5.448 13.274-10.39 18.229-7.21 7.198-17.156 11.659-28.051 11.659-10.92 0-20.842-4.461-28.015-11.623-7.21-7.172-11.659-17.119-11.659-28.051 0-10.944 4.449-20.878 11.622-28.051 7.174-7.173 17.107-11.622 28.052-11.622 10.932 0 20.878 4.449 28.051 11.647zm-82.527 37.812H118.405v-19.572h146.974v19.572zm-109.124 86.176a39.698 39.698 0 0110.402-18.266c7.173-7.173 17.106-11.622 28.051-11.622 10.932 0 20.878 4.449 28.051 11.622 7.161 7.21 11.623 17.132 11.623 28.052 0 10.895-4.462 20.841-11.623 28.014-7.21 7.198-17.156 11.659-28.051 11.659-10.92 0-20.841-4.461-28.014-11.622a39.499 39.499 0 01-10.439-18.266h-37.85v-19.571h37.85zm24.23-4.437a20.074 20.074 0 00-5.879 14.223 20.098 20.098 0 005.879 14.223c3.599 3.623 8.665 5.878 14.223 5.878a20.122 20.122 0 0014.235-5.866 20.123 20.123 0 005.867-14.235 20.125 20.125 0 00-5.867-14.236 20.186 20.186 0 00-14.235-5.866 20.073 20.073 0 00-14.223 5.879zm68.699 4.437h144.373v19.571H249.184v-19.571zm-48.24-209.93a39.691 39.691 0 0110.403-18.265c7.173-7.173 17.107-11.623 28.051-11.623 10.932 0 20.879 4.45 28.051 11.623 7.161 7.21 11.623 17.131 11.623 28.051 0 10.895-4.462 20.841-11.623 28.015-7.21 7.197-17.156 11.659-28.051 11.659-10.92 0-20.841-4.462-28.015-11.622a39.508 39.508 0 01-10.439-18.266h-82.539v-19.572h82.539zm24.231-4.437a20.075 20.075 0 00-5.879 14.223 20.098 20.098 0 005.879 14.223c3.599 3.624 8.665 5.879 14.223 5.879a20.117 20.117 0 0014.235-5.867 20.117 20.117 0 005.867-14.235 20.117 20.117 0 00-5.867-14.235 20.188 20.188 0 00-14.235-5.867 20.077 20.077 0 00-14.223 5.879zm68.699 4.437h99.708v19.572h-99.708v-19.572zM19.572 492.428h472.855V19.572H19.572v472.856z"/></svg>
+        
+        
+            </span>
+        </button>
+    </div>
+    <div class="filter-content advanced-filter-content">
+        <div class="filter-row">
+            <select class="filter-select" id="incallOutcall">
+                <option value="">Incall / Outcall</option>
+                <option value="incall">Incall</option>
+                <option value="outcall">Outcall</option>
+            </select>
+            <select class="filter-select" id="meetingWith">
+                <option value="">Meeting With</option>
+                <option value="men">Men</option>
+                <option value="women">Women</option>
+                <option value="couples">Couples</option>
+            </select>
+            <select class="filter-select" id="age">
+                <option value="">Age</option>
+                <option value="18-25">18-25</option>
+                <option value="26-35">26-35</option>
+                <option value="36+">36+</option>
+            </select>
+            <select class="filter-select" id="height">
+                <option value="">Height</option>
+                <option value="short">Short</option>
+                <option value="medium">Medium</option>
+                <option value="tall">Tall</option>
+            </select>
+            <select class="filter-select" id="weight">
+                <option value="">Weight</option>
+                <option value="light">Light</option>
+                <option value="average">Average</option>
+                <option value="heavy">Heavy</option>
+            </select>
+            <select class="filter-select" id="hair">
+                <option value="">Hair</option>
+                <option value="blonde">Blonde</option>
+                <option value="brunette">Brunette</option>
+                <option value="black">Black</option>
+            </select>
+            <select class="filter-select" id="tits">
+                <option value="">Tits</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+            </select>
+            <select class="filter-select" id="ethnicity">
+                <option value="">Ethnicity</option>
+                <option value="caucasian">Caucasian</option>
+                <option value="asian">Asian</option>
+                <option value="black">Black</option>
+            </select>
+            <select class="filter-select" id="nationality">
+                <option value="">Nationality</option>
+                <!-- Add nationalities as needed -->
+            </select>
+        </div>
+        <div class="filter-row">
+            <label class="filter-checkbox"><input type="checkbox" id="withReviews"> With Reviews</label>
+            <label class="filter-checkbox"><input type="checkbox" id="withVideo"> With Video</label>
+            <label class="filter-checkbox"><input type="checkbox" id="verified"> 100% Verified</label>
+            <label class="filter-checkbox"><input type="checkbox" id="pornstar"> Pornstar</label>
+            <label class="filter-checkbox"><input type="checkbox" id="skypeEscorts"> Skype Escorts</label>
+            <label class="filter-checkbox"><input type="checkbox" id="couples"> Couples</label>
+            <label class="filter-checkbox"><input type="checkbox" id="duo"> Duo</label>
+            <label class="filter-checkbox"><input type="checkbox" id="ebonyOnly"> Ebony Only</label>
+            <label class="filter-checkbox"><input type="checkbox" id="fetish"> Fetish</label>
+            <label class="filter-checkbox"><input type="checkbox" id="mistresses"> Mistresses</label>
+            <label class="filter-checkbox"><input type="checkbox" id="aLevel"> A-Level</label>
+        </div>
+        <div class="filter-row">
+            <label class="filter-checkbox"><input type="checkbox" id="availableForCouples"> Available for Couples</label>
+            <label class="filter-checkbox"><input type="checkbox" id="independent"> Independent</label>
+            <label class="filter-checkbox"><input type="checkbox" id="new"> New</label>
+            <label class="filter-checkbox"><input type="checkbox" id="noLocal"> No Local</label>
+        </div>
+        <div class="filter-row">
+            <select class="filter-select" id="countryFilter">
+                <option value="">Netherlands (828)</option>
+                <!-- Add other countries as needed -->
+            </select>
+            <select class="filter-select" id="cityFilter">
+                <option value="">City</option>
+                <!-- Add cities as needed -->
+            </select>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
                     <section class="stories-section">
                         <h2>Featured Stories</h2>
                         <div class="stories-container">
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Success Story #1</span>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Tutorial</span>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Tips & Tricks</span>
+                            </div>
+                            <div class="story-item">
+                                <div class="story-preview"></div>
+                                <span>Behind Scenes</span>
+                            </div>
                             <div class="story-item">
                                 <div class="story-preview"></div>
                                 <span>Success Story #1</span>
