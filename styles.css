@@ -959,9 +959,44 @@ html {
     max-height: 1000px; /* Достаточно для всего контента */
     opacity: 1;
 }
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1rem;
+}
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+        background: var(--background-primary);
+    border-radius: 8px;
+padding-top: 10px;
+padding-bottom: 10px;
+    box-shadow: var(--shadow-light);
+}
+
+.profile-avatar {
+    overflow: hidden;
+}
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.service-actions {
+    flex-direction: column;
+}
+
+
 
 
 @media (max-width: 768px) {
+    .benefits-grid {
+
+    grid-template-columns: repeat(2,1fr);
+}
     .advanced-filters .filter-toggle-advanced {
         display: block;
     }
@@ -987,6 +1022,17 @@ html {
     .advanced-filters {
     padding: 10px 20px;
 }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

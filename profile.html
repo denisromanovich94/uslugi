@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - ServiceHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .profile-hero {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 600;
+        }
+        
+        .profile-info h1 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .stat-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .profile-content {
+            padding: 3rem 0;
+        }
+        
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 3rem;
+        }
+        
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .sidebar-section {
+            background: var(--background-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .sidebar-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-menu a {
+            display: block;
+            padding: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .profile-main {
+            background: var(--background-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section h2 {
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .services-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .service-item {
+            background: var(--background-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .service-details h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-details p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .service-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-edit {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .btn-small:hover {
+            transform: translateY(-1px);
+        }
+        
+        .orders-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .order-item {
+            background: var(--background-primary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .order-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .status-completed {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--background-primary);
+            color: var(--text-primary);
+        }
+        
+        .save-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+        
+        .save-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 1024px) {
+            .profile-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                justify-content: center;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="profile.html" class="nav-link active">Profile</a>
+                    <a href="register.html" class="nav-link">Join</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="profile-hero">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar"><img src="img/1.jpg" alt=""></div>
+                <div class="profile-info">
+                    <h1>Sarah Johnson</h1>
+                    <p>Professional Professional </p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">127</div>
+                            <div class="stat-label">Orders Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4.9</div>
+                            <div class="stat-label">Average Rating</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$12,450</div>
+                            <div class="stat-label">Total Earnings</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="profile-content">
+        <div class="container">
+            <div class="profile-layout">
+                <div class="profile-sidebar">
+                    <div class="sidebar-section">
+                        <h3>Dashboard</h3>
+                        <ul class="nav-menu">
+                            <li><a href="#" class="nav-link active" onclick="showSection('overview')">Overview</a></li>
+                            <li><a href="#" class="nav-link" onclick="showSection('services')">My Services</a></li>
+                            <li><a href="#" class="nav-link" onclick="showSection('orders')">Orders</a></li>
+                            <li><a href="#" class="nav-link" onclick="showSection('earnings')">Earnings</a></li>
+                            <li><a href="#" class="nav-link" onclick="showSection('messages')">Messages</a></li>
+                            <li><a href="#" class="nav-link" onclick="showSection('settings')">Account info</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <h3>Quick Actions</h3>
+                        <button class="banner-btn" style="width: 100%; margin-bottom: 0.5rem;">Create New Service</button>
+                        <button class="banner-btn" style="width: 100%;">Withdraw Earnings</button>
+                    </div>
+                </div>
+
+                <div class="profile-main">
+                    <!-- Overview Section -->
+                    <div id="overview" class="section active">
+                        <h2>Dashboard Overview</h2>
+                        <div class="benefits-grid" style="margin-bottom: 1rem;">
+                            <div class="benefit-item">
+                                <div class="benefit-icon">📊</div>
+                                <h4>Active Orders</h4>
+                                <p style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">8</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">💰</div>
+                                <h4>This Month</h4>
+                                <p style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">$2,340</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">⭐</div>
+                                <h4>New Reviews</h4>
+                                <p style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">12</p>
+                            </div>
+                            <div class="benefit-item">
+                                <div class="benefit-icon">📈</div>
+                                <h4>Profile Views</h4>
+                                <p style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);">1,247</p>
+                            </div>
+                        </div>
+                        
+                        <div class="order-item">
+                            <h3>Recent Activity</h3>
+                            <p>✅ Order #1234 completed</p>
+                            <p>📝 New message from client</p>
+                            <p>⭐ New 5-star review received from Jennifer Wong</p>
+                            <p>💰 Payment of $150 received for order #1233</p>
+                        </div>
+                    </div>
+
+                    <!-- Services Section -->
+                    <div id="services" class="section">
+                        <h2>My Services</h2>
+                        <div class="services-list">
+                            <div class="service-item">
+                                <div class="service-details">
+                                    <h4>Professional</h4>
+                                    <p>Starting at $50 • 127 orders completed</p>
+                                    <p>⭐ 4.9 rating • Active</p>
+                                </div>
+                                <div class="service-actions">
+                                    <button class="btn-small btn-edit">Edit</button>
+                                    <button class="btn-small btn-delete">Delete</button>
+                                </div>
+                            </div>
+                            
+                            <div class="service-item">
+                                <div class="service-details">
+                                    <h4>Business Card</h4>
+                                    <p>Starting at $25 • 89 orders completed</p>
+                                    <p>⭐ 4.8 rating • Active</p>
+                                </div>
+                                <div class="service-actions">
+                                    <button class="btn-small btn-edit">Edit</button>
+                                    <button class="btn-small btn-delete">Delete</button>
+                                </div>
+                            </div>
+                            
+                            <div class="service-item">
+                                <div class="service-details">
+                                    <h4>Package</h4>
+                                    <p>Starting at $200 • 34 orders completed</p>
+                                    <p>⭐ 5.0 rating • Active</p>
+                                </div>
+                                <div class="service-actions">
+                                    <button class="btn-small btn-edit">Edit</button>
+                                    <button class="btn-small btn-delete">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orders Section -->
+                    <div id="orders" class="section">
+                        <h2>My Orders</h2>
+                        <div class="orders-grid">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <h4>Order #1234</h4>
+                                    <span class="order-status status-active">In Progress</span>
+                                </div>
+                                <p><strong>Client:</strong> Alex Martinez</p>
+                                <p><strong>Due Date:</strong> March 15, 2024</p>
+                                <p><strong>Amount:</strong> $75</p>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <h4>Order #1233</h4>
+                                    <span class="order-status status-completed">Completed</span>
+                                </div>
+                                <p><strong>Client:</strong> Jennifer Wong</p>
+                                <p><strong>Completed:</strong> March 10, 2024</p>
+                                <p><strong>Amount:</strong> $50</p>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <h4>Order #1232</h4>
+                                    <span class="order-status status-pending">Pending</span>
+                                </div>
+                                <p><strong>Client:</strong> Wong Wong</p>
+                                <p><strong>Due Date:</strong> March 20, 2024</p>
+                                <p><strong>Amount:</strong> $250</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Earnings Section -->
+                    <div id="earnings" class="section">
+                        <h2>Earnings</h2>
+                        <div class="order-item" style="margin-bottom: 2rem;">
+                            <h3>Available Balance: $1,250.00</h3>
+                            <p>Next payout: March 15, 2024</p>
+                            <button class="save-btn" style="margin-top: 1rem;">Request Withdrawal</button>
+                        </div>
+                        
+                        <h3>Recent Transactions</h3>
+                        <div class="orders-grid">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span>Order #1233 Payment</span>
+                                    <span style="font-weight: 700; color: var(--primary-color);">+$50.00</span>
+                                </div>
+                                <p>March 10, 2024</p>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <span>Withdrawal to Bank</span>
+                                    <span style="font-weight: 700; color: #ef4444;">-$500.00</span>
+                                </div>
+                                <p>March 8, 2024</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages Section -->
+                    <div id="messages" class="section">
+                        <h2>Messages</h2>
+                        <div class="orders-grid">
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <h4>Alex Martinez</h4>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">2 hours ago</span>
+                                </div>
+                                <p>Hi Sarah, could you please make me happy? Thanks!</p>
+                                <button class="btn-small btn-edit">Reply</button>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-header">
+                                    <h4>Jennifer Wong</h4>
+                                    <span style="font-size: 0.9rem; color: var(--text-secondary);">1 day ago</span>
+                                </div>
+                                <p>Perfect work as always! I'll definitely order again soon.</p>
+                                <button class="btn-small btn-edit">Reply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Section -->
+                    <div id="settings" class="section">
+                        <h2>Account Settings</h2>
+                        <form>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">First Name</label>
+                                    <input type="text" class="form-input" value="Sarah">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name</label>
+                                    <input type="text" class="form-input" value="Johnson">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" class="form-input" value="sarah.johnson@example.com">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Professional Title</label>
+                                <input type="text" class="form-input" value="Professional">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-input" style="min-height: 120px;">Info</textarea>
+                            </div>
+                            
+                            <button type="submit" class="save-btn">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ServiceHub</h4>
+                    <p>Your trusted for professional services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Section navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked nav link
+            event.target.classList.add('active');
+        }
+
+        // Initialize
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+</body>
+</html>
