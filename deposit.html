@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Balance - ServiceHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .balance-hero {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .balance-content {
+            padding: 3rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .balance-card {
+            background: var(--background-secondary);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 2rem;
+        }
+        
+        .current-balance {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: var(--gradient-secondary);
+            border-radius: 12px;
+            color: white;
+        }
+        
+        .balance-amount {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .balance-label {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .payment-method {
+            background: var(--background-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .payment-method:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color)10, transparent);
+        }
+        
+        .payment-method.selected::before {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .payment-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .payment-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .amount-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .amount-option {
+            background: var(--background-primary);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .amount-option:hover {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .amount-option.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .custom-amount {
+            grid-column: 1 / -1;
+        }
+        
+        .custom-amount input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1.2rem;
+            text-align: center;
+            background: var(--background-primary);
+            color: var(--text-primary);
+            transition: border-color 0.3s ease;
+        }
+        
+        .custom-amount input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        
+        .form-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--background-primary);
+            color: var(--text-primary);
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-input.error {
+            border-color: #ef4444;
+        }
+        
+        .form-input.success {
+            border-color: #10b981;
+        }
+        
+        .error-message {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .success-message {
+            color: #10b981;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .deposit-btn {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 1.25rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .deposit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .deposit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .deposit-btn.loading::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .deposit-btn.loading span {
+            opacity: 0;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .transaction-history {
+            background: var(--background-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+        
+        .transaction-item:hover {
+            background-color: var(--background-secondary);
+        }
+        
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .transaction-details h4 {
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+        }
+        
+        .transaction-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        
+        .transaction-amount {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .security-info {
+            background: var(--background-tertiary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .security-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .security-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .balance-card {
+                padding: 1.5rem;
+                margin: 0 1rem 2rem;
+            }
+            
+            .balance-amount {
+                font-size: 2rem;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+            
+            .amount-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .transaction-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="profile.html" class="nav-link">Profile Creator</a>
+                    <a href="profile-buyer.html" class="nav-link">Profile Buyer</a>
+                    <a href="deposit.html" class="nav-link active">Top Up</a>
+                    <a href="withdrawal.html" class="nav-link">Withdraw</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="balance-hero">
+        <div class="container">
+            <h1>Top Up Your Balance</h1>
+            <p>Add funds to your ServiceHub account securely and instantly</p>
+        </div>
+    </section>
+
+    <main class="balance-content">
+        <div class="container">
+            <div class="balance-card">
+                <div class="current-balance">
+                    <div class="balance-amount">$320.00</div>
+                    <div class="balance-label">Current Balance</div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Select Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'card')">
+                            <div class="payment-icon">💳</div>
+                            <div class="payment-name">Credit/Debit Card</div>
+                            <div class="payment-description">Visa, Mastercard, American Express</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'paypal')">
+                            <div class="payment-icon">🅿️</div>
+                            <div class="payment-name">PayPal</div>
+                            <div class="payment-description">Secure PayPal payments</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'stripe')">
+                            <div class="payment-icon">💰</div>
+                            <div class="payment-name">Stripe</div>
+                            <div class="payment-description">Fast and secure</div>
+                        </div>
+                        <div class="payment-method" onclick="selectPaymentMethod(this, 'bank')">
+                            <div class="payment-icon">🏦</div>
+                            <div class="payment-name">Bank Transfer</div>
+                            <div class="payment-description">Direct bank transfer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Select Amount</h3>
+                    <div class="amount-options">
+                        <div class="amount-option" onclick="selectAmount(this, 25)">$25</div>
+                        <div class="amount-option" onclick="selectAmount(this, 50)">$50</div>
+                        <div class="amount-option" onclick="selectAmount(this, 100)">$100</div>
+                        <div class="amount-option" onclick="selectAmount(this, 250)">$250</div>
+                        <div class="amount-option" onclick="selectAmount(this, 500)">$500</div>
+                        <div class="amount-option" onclick="selectAmount(this, 1000)">$1000</div>
+                        <div class="custom-amount">
+                            <input type="number" placeholder="Enter custom amount" id="customAmount" min="1" max="10000">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="cardForm" class="form-section" style="display: none;">
+                    <h3>Card Details</h3>
+                    <div class="form-group">
+                        <label class="form-label">Card Number</label>
+                        <input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+                        <div class="error-message" id="cardNumberError">Please enter a valid card number</div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" class="form-input" id="expiryDate" placeholder="MM/YY" maxlength="5">
+                            <div class="error-message" id="expiryError">Please enter a valid expiry date</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-input" id="cvv" placeholder="123" maxlength="4">
+                            <div class="error-message" id="cvvError">Please enter a valid CVV</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Cardholder Name</label>
+                        <input type="text" class="form-input" id="cardholderName" placeholder="John Smith">
+                        <div class="error-message" id="nameError">Please enter the cardholder name</div>
+                    </div>
+                </div>
+
+                <div class="security-info">
+                    <h4>🔒 Secure Payment</h4>
+                    <p>Your payment information is encrypted and secure. We use industry-standard SSL encryption to protect your data.</p>
+                </div>
+
+                <button class="deposit-btn" id="depositBtn" onclick="processDeposit()">
+                    <span>Complete Top Up</span>
+                </button>
+            </div>
+
+            <div class="transaction-history">
+                <h3>Recent Transactions</h3>
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <div class="transaction-icon">+</div>
+                        <div class="transaction-details">
+                            <h4>Balance Top Up</h4>
+                            <div class="transaction-date">March 10, 2024 • Card ending 4567</div>
+                        </div>
+                    </div>
+                    <div class="transaction-amount">+$50.00</div>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <div class="transaction-icon">+</div>
+                        <div class="transaction-details">
+                            <h4>PayPal Deposit</h4>
+                            <div class="transaction-date">March 8, 2024 • PayPal</div>
+                        </div>
+                    </div>
+                    <div class="transaction-amount">+$100.00</div>
+                </div>
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <div class="transaction-icon">+</div>
+                        <div class="transaction-details">
+                            <h4>Bank Transfer</h4>
+                            <div class="transaction-date">March 5, 2024 • Bank Transfer</div>
+                        </div>
+                    </div>
+                    <div class="transaction-amount">+$250.00</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ServiceHub</h4>
+                    <p>Your trusted marketplace for professional services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let selectedPaymentMethod = null;
+        let selectedAmount = null;
+
+        // Theme functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function selectPaymentMethod(element, method) {
+            document.querySelectorAll('.payment-method').forEach(pm => pm.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedPaymentMethod = method;
+            
+            const cardForm = document.getElementById('cardForm');
+            if (method === 'card') {
+                cardForm.style.display = 'block';
+                cardForm.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                cardForm.style.display = 'none';
+            }
+        }
+
+        function selectAmount(element, amount) {
+            document.querySelectorAll('.amount-option').forEach(ao => ao.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedAmount = amount;
+            document.getElementById('customAmount').value = '';
+        }
+
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\s/g, '');
+            let formatted = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+            input.value = formatted;
+        }
+
+        function formatExpiryDate(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+        }
+
+        function validateCard() {
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const expiryDate = document.getElementById('expiryDate').value;
+            const cvv = document.getElementById('cvv').value;
+            const cardholderName = document.getElementById('cardholderName').value;
+
+            let isValid = true;
+
+            // Card number validation
+            if (cardNumber.length < 13 || cardNumber.length > 19) {
+                showError('cardNumber', 'cardNumberError');
+                isValid = false;
+            } else {
+                showSuccess('cardNumber');
+            }
+
+            // Expiry date validation
+            const expiryRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+            if (!expiryRegex.test(expiryDate)) {
+                showError('expiryDate', 'expiryError');
+                isValid = false;
+            } else {
+                showSuccess('expiryDate');
+            }
+
+            // CVV validation
+            if (cvv.length < 3 || cvv.length > 4) {
+                showError('cvv', 'cvvError');
+                isValid = false;
+            } else {
+                showSuccess('cvv');
+            }
+
+            // Name validation
+            if (cardholderName.trim().length < 2) {
+                showError('cardholderName', 'nameError');
+                isValid = false;
+            } else {
+                showSuccess('cardholderName');
+            }
+
+            return isValid;
+        }
+
+        function showError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            input.classList.add('error');
+            input.classList.remove('success');
+            error.style.display = 'block';
+        }
+
+        function showSuccess(inputId) {
+            const input = document.getElementById(inputId);
+            input.classList.add('success');
+            input.classList.remove('error');
+            const errorElement = input.parentNode.querySelector('.error-message');
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+        }
+
+        function processDeposit() {
+            const customAmount = document.getElementById('customAmount').value;
+            const finalAmount = customAmount || selectedAmount;
+
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+
+            if (!finalAmount || finalAmount <= 0) {
+                alert('Please select or enter an amount');
+                return;
+            }
+
+            if (selectedPaymentMethod === 'card' && !validateCard()) {
+                alert('Please check your card details');
+                return;
+            }
+
+            const btn = document.getElementById('depositBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            // Simulate processing
+            setTimeout(() => {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+                
+                // Update balance display
+                const currentBalance = document.querySelector('.balance-amount');
+                const newBalance = parseFloat(currentBalance.textContent.replace('$', '')) + parseFloat(finalAmount);
+                currentBalance.textContent = `$${newBalance.toFixed(2)}`;
+                
+                alert(`Successfully added $${finalAmount} to your balance!`);
+                
+                // Reset form
+                document.querySelectorAll('.payment-method').forEach(pm => pm.classList.remove('selected'));
+                document.querySelectorAll('.amount-option').forEach(ao => ao.classList.remove('selected'));
+                document.getElementById('customAmount').value = '';
+                document.getElementById('cardForm').style.display = 'none';
+                selectedPaymentMethod = null;
+                selectedAmount = null;
+            }, 3000);
+        }
+
+        // Event listeners
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('cardNumber').addEventListener('input', (e) => formatCardNumber(e.target));
+        document.getElementById('expiryDate').addEventListener('input', (e) => formatExpiryDate(e.target));
+        document.getElementById('cvv').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        document.getElementById('customAmount').addEventListener('input', (e) => {
+            if (e.target.value) {
+                document.querySelectorAll('.amount-option').forEach(ao => ao.classList.remove('selected'));
+                selectedAmount = null;
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+</body>
+</html>
