@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Gallery - ServiceHub</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>
+        /* Video Gallery Styles */
+.video-hero {
+    text-align: center;
+    padding: 3rem 0;
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+}
+
+.video-hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.video-hero p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+.video-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    background: var(--background-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 1rem;
+}
+
+.filter-tab {
+    background: transparent;
+    border: 2px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.filter-tab:hover,
+.filter-tab.active {
+    background: var(--gradient-primary);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.video-sort select {
+    background: var(--background-primary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.video-stats {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.video-card {
+    background: var(--background-secondary);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.video-thumbnail {
+    position: relative;
+    aspect-ratio: 9/16;
+    overflow: hidden;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail img {
+    transform: scale(1.05);
+}
+
+.video-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.video-card:hover .video-play-btn {
+    background: var(--gradient-primary);
+    color: white;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.video-info {
+    padding: 1.5rem;
+}
+
+.video-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.video-info p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+video {
+    border-radius: 16px !important;
+}
+.video-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.video-views {
+    font-weight: 500;
+}
+
+.load-more-section {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.load-more-btn {
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.load-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Video Modal */
+.video-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.video-modal-content {
+    position: relative;
+    background: var(--background-primary);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 460px;
+    max-height: 90vh;
+    /* overflow: auto; */
+    box-shadow: var(--shadow-medium);
+    height: 90vh;
+    
+}
+
+.video-modal-header {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.video-modal-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: var(--background-tertiary);
+    color: var(--text-primary);
+}
+
+.video-player-container {
+    position: absolute;
+    width: 100%;
+    aspect-ratio: 9/16;
+    max-width: 460px;
+    inset: 0;
+    border-radius: 16px;
+    z-index: 2;
+}
+
+.video-player-container video {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+.video-modal-info {
+    padding: 1.5rem;
+}
+
+.video-modal-info p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.modal-video-meta {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .main-content {
+        grid-template-columns: 250px 1fr 250px;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .sidebar-left,
+    .sidebar-right {
+        position: static;
+        max-height: none;
+    }
+    
+    .header-content {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .search-input {
+        width: 200px;
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    
+    .video-filters {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .filter-tabs {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .nav {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .header-actions {
+        justify-content: center;
+    }
+    
+    .search-input {
+        width: 150px;
+    }
+    
+    .video-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .video-hero p {
+        font-size: 1rem;
+    }
+    
+    .filter-tabs {
+        gap: 0.5rem;
+    }
+    
+    .filter-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .video-modal-content {
+        width: 95%;
+        margin: 2rem auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .video-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .video-hero {
+        padding: 2rem 1rem;
+    }
+    
+    .video-filters {
+        padding: 1rem;
+    }
+    
+    .filter-tabs {
+        flex-direction: column;
+    }
+    
+    .filter-tab {
+        text-align: center;
+    }
+    
+    .video-modal-content {
+        width: 98%;
+        margin: 1rem auto;
+    }
+    
+    .video-modal-header {
+        padding: 1rem;
+    }
+    
+    .video-modal-info {
+        padding: 1rem;
+    }
+}
+
+/* Filter and Advanced Filter Styles */
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-toggle {
+    display: none;
+    background: var(--background-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text-primary);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.filter-toggle:hover {
+    background: var(--background-tertiary);
+    transform: scale(1.05);
+}
+
+.filter-toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.filter-content {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.mobile-flex {
+    display: none;
+}
+
+.desktop-flex {
+    display: block;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .filter-toggle {
+        display: block;
+    }
+
+    .filter-content {
+        max-height: 0;
+        opacity: 0;
+    }
+
+    .filter-content.open {
+        max-height: 1000px;
+        opacity: 1;
+    }
+
+    .filter-header {
+        margin-bottom: 0;
+    }
+
+    .filter-header h3 {
+        margin-bottom: 0;
+        margin-top: -3px;
+    }
+
+    .filter-group {
+        padding-top: 20px;
+    }
+
+    .mobile-flex {
+        display: block;
+    }
+
+    .desktop-flex {
+        display: none;
+    }
+}
+
+.gear-icon {
+    transition: fill 0.3s ease, stroke 0.3s ease, transform 0.3s ease;
+}
+
+[data-theme="dark"] .gear-icon {
+    fill: var(--text-primary);
+    stroke: var(--text-primary);
+}
+
+.filter-toggle {
+    padding: 0;
+    border: none;
+}
+
+.filter-toggle-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.filter-toggle-icon {
+    height: 24px;
+    width: 24px;
+}
+
+.sidebar-left {
+    direction: rtl;
+}
+
+.sidebar-left * {
+    direction: ltr;
+}
+
+/* Scrollbar Styles */
+.sidebar-left::-webkit-scrollbar {
+    width: 12px;
+}
+
+.sidebar-left::-webkit-scrollbar-track {
+    background: var(--background-secondary);
+}
+
+.sidebar-left::-webkit-scrollbar-thumb {
+    background-color: var(--text-secondary);
+    border-radius: 10px;
+    border: 3px solid var(--background-secondary);
+}
+
+[data-theme="dark"] .sidebar-left::-webkit-scrollbar-track {
+    background: var(--background-secondary);
+}
+
+[data-theme="dark"] .sidebar-left::-webkit-scrollbar-thumb {
+    background-color: #999;
+    border: 3px solid var(--background-secondary);
+}
+
+.advanced-filters {
+    background: var(--background-secondary);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: var(--shadow-light);
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.filter-select,
+.filter-checkbox {
+    background: var(--background-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.filter-select {
+    min-width: 120px;
+}
+
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-checkbox input {
+    accent-color: var(--primary-color);
+    width: 16px;
+    height: 16px;
+}
+
+.filter-select:hover,
+.filter-checkbox:hover {
+    background-color: var(--background-tertiary);
+}
+
+[data-theme="dark"] .filter-select,
+[data-theme="dark"] .filter-checkbox {
+    background: var(--background-tertiary);
+    color: var(--text-primary);
+}
+
+.advanced-filters .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.advanced-filters .filter-toggle-advanced {
+    display: none;
+    background: var(--background-secondary);
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.advanced-filters .filter-toggle-advanced:hover {
+    background: var(--background-tertiary);
+    transform: scale(1.05);
+}
+
+.advanced-filters .filter-toggle-icon {
+    height: 24px;
+    width: 24px;
+}
+
+.advanced-filters .filter-content {
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+}
+
+.advanced-filters .filter-content.open {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--background-primary);
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: var(--shadow-light);
+}
+
+.profile-avatar {
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.service-actions {
+    flex-direction: column;
+}
+
+.sort-options {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .advanced-filters .filter-toggle-advanced {
+        display: block;
+    }
+
+    .advanced-filters .filter-content {
+        max-height: 0;
+        opacity: 0;
+    }
+
+    .advanced-filters .filter-content.open {
+        max-height: 1000px;
+        opacity: 1;
+    }
+
+    .advanced-filters .filter-header h3 {
+        margin-bottom: 0;
+        margin-top: -3px;
+    }
+
+    .advanced-filters .filter-row {
+        padding-top: 20px;
+    }
+
+    .advanced-filters {
+        padding: 10px 20px;
+    }
+
+    .filter-row {
+        flex-direction: column;
+    }
+
+    .filter-select,
+    .filter-checkbox {
+        width: 100%;
+    }
+
+    .stories-container {
+        flex-wrap: wrap;
+    }
+
+    .filter-group {
+        margin-bottom: 0;
+    }
+}
+
+#countryFilter,
+#cityFilter {
+    display: none;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+.service-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.service-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+    </style>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="videos.html" class="nav-link active">Videos</a>
+                    <a href="profile.html" class="nav-link">Profile creater</a>
+                    <a href="profile-buyer.html" class="nav-link">Profile Buyer</a>
+                    <a href="register.html" class="nav-link">Join</a>
+                </nav>
+                <div class="header-actions">
+                    <div class="search-container">
+                        <input type="text" id="videoSearchInput" placeholder="Search videos..." class="search-input">
+                        <button class="search-btn">🔍</button>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="video-hero">
+                <h1>Video Gallery</h1>
+                <p>Discover our collection of professional video content</p>
+            </div>
+
+            <div class="video-filters">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-category="all">All Videos</button>
+                    <button class="filter-tab" data-category="tutorials">Video category 1</button>
+                    <button class="filter-tab" data-category="reviews">Video category 2</button>
+                    <button class="filter-tab" data-category="demos">Video category 3</button>
+                    <button class="filter-tab" data-category="testimonials">Video category 4</button>
+                </div>
+                <div class="video-sort">
+                    <select id="videoSort">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="duration">Duration</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="video-stats">
+                <span id="videoCount">24 videos found</span>
+            </div>
+
+            <div class="video-grid" id="videoGrid">
+                <!-- Video 1 -->
+                <div class="video-card" data-category="tutorials" data-date="2024-01-15" onclick="openVideoModal(0)">
+                    <div class="video-thumbnail">
+                        <img src="img/1.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:24</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Getting Started Tutorial</h3>
+                        <p>Learn the basics of our platform</p>
+                        <div class="video-meta">
+                            <span class="video-views">1.2K views</span>
+                            <span class="video-date">2 days ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-card" data-category="reviews" data-date="2024-01-12" onclick="openVideoModal(1)">
+                    <div class="video-thumbnail">
+                         <img src="img/2.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:45</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Service Review: Professional Design</h3>
+                        <p>Honest review of our design services</p>
+                        <div class="video-meta">
+                            <span class="video-views">856 views</span>
+                            <span class="video-date">5 days ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-card" data-category="demos" data-date="2024-01-10" onclick="openVideoModal(2)">
+                    <div class="video-thumbnail">
+                         <img src="img/3.jpg" alt="Tutorial Video">
+                        
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:30</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Platform Demo</h3>
+                        <p>Complete walkthrough of our features</p>
+                        <div class="video-meta">
+                            <span class="video-views">2.3K views</span>
+                            <span class="video-date">1 week ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Video 4 -->
+                <div class="video-card" data-category="testimonials" data-date="2024-01-08" onclick="openVideoModal(3)">
+                    <div class="video-thumbnail">
+                         <img src="img/4.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:18</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Customer Success Story</h3>
+                        <p>How Sarah increased her business by 300%</p>
+                        <div class="video-meta">
+                            <span class="video-views">945 views</span>
+                            <span class="video-date">1 week ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Video 5 -->
+                <div class="video-card" data-category="tutorials" data-date="2024-01-05" onclick="openVideoModal(4)">
+                    <div class="video-thumbnail">
+                         <img src="img/5.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:42</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Advanced Techniques</h3>
+                        <p>Master advanced features and workflows</p>
+                        <div class="video-meta">
+                            <span class="video-views">1.8K views</span>
+                            <span class="video-date">2 weeks ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Video 6 -->
+                <div class="video-card" data-category="demos" data-date="2024-01-03" onclick="openVideoModal(5)">
+                    <div class="video-thumbnail">
+                         <img src="img/1.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:22</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>New Features Demo</h3>
+                        <p>Exploring our latest updates</p>
+                        <div class="video-meta">
+                            <span class="video-views">1.1K views</span>
+                            <span class="video-date">2 weeks ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Video 7 -->
+                <div class="video-card" data-category="reviews" data-date="2024-01-01" onclick="openVideoModal(6)">
+                    <div class="video-thumbnail">
+                         <img src="img/2.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:15</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Service Comparison Guide</h3>
+                        <p>Compare different service packages</p>
+                        <div class="video-meta">
+                            <span class="video-views">2.7K views</span>
+                            <span class="video-date">3 weeks ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Video 8 -->
+                <div class="video-card" data-category="testimonials" data-date="2023-12-28" onclick="openVideoModal(7)">
+                    <div class="video-thumbnail">
+                         <img src="img/3.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:33</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Client Interview</h3>
+                        <p>Meet our satisfied customers</p>
+                        <div class="video-meta">
+                            <span class="video-views">892 views</span>
+                            <span class="video-date">3 weeks ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- Additional Videos -->
+                <div class="video-card" data-category="tutorials" data-date="2023-12-25" onclick="openVideoModal(8)">
+                    <div class="video-thumbnail">
+                         <img src="img/4.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:12</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Quick Tips & Tricks</h3>
+                        <p>Productivity hacks for better results</p>
+                        <div class="video-meta">
+                            <span class="video-views">1.5K views</span>
+                            <span class="video-date">1 month ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="video-card" data-category="demos" data-date="2023-12-22" onclick="openVideoModal(9)">
+                    <div class="video-thumbnail">
+                         <img src="img/5.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:18</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Third-party Integrations</h3>
+                        <p>Connect with your favorite tools</p>
+                        <div class="video-meta">
+                            <span class="video-views">723 views</span>
+                            <span class="video-date">1 month ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="video-card" data-category="reviews" data-date="2023-12-20" onclick="openVideoModal(10)">
+                    <div class="video-thumbnail">
+                         <img src="img/1.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:45</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>2023 Year in Review</h3>
+                        <p>Our achievements and milestones</p>
+                        <div class="video-meta">
+                            <span class="video-views">3.2K views</span>
+                            <span class="video-date">1 month ago</span>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div class="video-card" data-category="testimonials" data-date="2023-12-18" onclick="openVideoModal(11)">
+                    <div class="video-thumbnail">
+                         <img src="img/2.jpg" alt="Tutorial Video">
+                        <div class="video-play-btn">▶</div>
+                        <div class="video-duration">0:57</div>
+                    </div>
+                    <!-- <div class="video-info">
+                        <h3>Success Stories Compilation</h3>
+                        <p>Multiple client success stories</p>
+                        <div class="video-meta">
+                            <span class="video-views">1.9K views</span>
+                            <span class="video-date">1 month ago</span>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="load-more-section">
+                <button class="load-more-btn" onclick="loadMoreVideos()">Load More Videos</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h3 id="modalVideoTitle">Video Title</h3>
+                <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+            </div>
+            <div class="video-player-container">
+                <video id="modalVideo" controls>
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="video-modal-info">
+                <p id="modalVideoDescription">Video description</p>
+                <div class="modal-video-meta">
+                    <span id="modalVideoViews">0 views</span>
+                    <span id="modalVideoDate">Date</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ServiceHub</h4>
+                    <p>Your trusted marketplace for professional services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script-video.js"></script>
+</body>
+</html>

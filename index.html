@@ -326,48 +326,263 @@
 </div>
 
 
-
+<div id="videoModal" class="video-modal">
+  <div class="video-modal-content">
+    <div class="video-modal-header">
+      <h3 id="modalVideoTitle">Video Title</h3>
+      <button class="modal-close" onclick="closeVideoModal()">&times;</button>
+    </div>
+    <div class="video-player-container">
+      <video id="modalVideo" controls>
+        <source src="" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+    <div class="video-modal-info">
+      <p id="modalVideoDescription">Video description</p>
+      <div class="modal-video-meta">
+        <span id="modalVideoViews">0 views</span>
+        <span id="modalVideoDate">Date</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
 
                     <section class="stories-section">
-                        <h2>Featured Stories</h2>
-                        <div class="stories-container">
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Success Story #1</span>
-                            </div>
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Tutorial</span>
-                            </div>
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Tips & Tricks</span>
-                            </div>
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Behind Scenes</span>
-                            </div>
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Success Story #1</span>
-                            </div>
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Tutorial</span>
-                            </div>
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Tips & Tricks</span>
-                            </div>
-                            <div class="story-item">
-                                <div class="story-preview"></div>
-                                <span>Behind Scenes</span>
-                            </div>
-                        </div>
-                    </section>
+  <h2>Featured Stories</h2>
+  <div class="stories-container">
+    <div class="story-item" onclick="openVideoModal(0)">
+      <div class="story-preview"></div>
+      <span>Success Story #1</span>
+    </div>
+    <div class="story-item" onclick="openVideoModal(1)">
+      <div class="story-preview"></div>
+      <span>Tutorial</span>
+    </div>
+    <div class="story-item" onclick="openVideoModal(2)">
+      <div class="story-preview"></div>
+      <span>Tips & Tricks</span>
+    </div>
+    <div class="story-item" onclick="openVideoModal(3)">
+      <div class="story-preview"></div>
+      <span>Behind Scenes</span>
+    </div>
+    <div class="story-item" onclick="openVideoModal(4)">
+      <div class="story-preview"></div>
+      <span>Success Story #2</span>
+    </div>
+    <div class="story-item" onclick="openVideoModal(5)">
+      <div class="story-preview"></div>
+      <span>Tutorial Advanced</span>
+    </div>
+    <div class="story-item" onclick="openVideoModal(6)">
+      <div class="story-preview"></div>
+      <span>Quick Tips</span>
+    </div>
+    <div class="story-item" onclick="openVideoModal(7)">
+      <div class="story-preview"></div>
+      <span>Customer Interview</span>
+    </div>
+  </div>
+</section>
+
+<style>
+    .video-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+}
+
+.video-modal-content {
+  position: relative;
+  background: var(--background-primary);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 460px;
+  max-height: 90vh;
+  box-shadow: var(--shadow-medium);
+  height: 90vh;
+}
+
+.video-modal-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.video-modal-header h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: var(--background-tertiary);
+  color: var(--text-primary);
+}
+
+.video-player-container {
+  position: absolute;
+  width: 100%;
+  aspect-ratio: 9/16;
+  max-width: 460px;
+  inset: 0;
+  border-radius: 16px;
+  z-index: 2;
+}
+
+.video-player-container video {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+}
+
+.video-modal-info {
+  padding: 1.5rem;
+}
+
+.video-modal-info p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.modal-video-meta {
+  display: flex;
+  gap: 2rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+</style>
+
+<script>
+    const videoData = [
+  {
+    title: "Professional Excellence Showcase",
+    description: "Our team delivers outstanding results.",
+    views: "1.2K",
+    date: "2 days ago",
+    videoUrl: "./test-vertical-video.mp4"
+  },
+  {
+    title: "Trusted Service Review",
+    description: "Experience our professionals in action.",
+    views: "856",
+    date: "5 days ago",
+    videoUrl: "./test-vertical-video.mp4"
+  },
+  {
+    title: "Complete Platform Walkthrough",
+    description: "Discover how we execute your projects.",
+    views: "2.3K",
+    date: "1 week ago",
+    videoUrl: "./test-vertical-video.mp4"
+  },
+  {
+    title: "Client Success Story",
+    description: "Learn how we drive results.",
+    views: "945",
+    date: "1 week ago",
+    videoUrl: "./test-vertical-video.mp4"
+  },
+  {
+    title: "Advanced Capabilities",
+    description: "Unlock your project's potential.",
+    views: "1.8K",
+    date: "2 weeks ago",
+    videoUrl: "./test-vertical-video.mp4"
+  },
+  {
+    title: "Feature Highlights",
+    description: "Explore our solutions in detail.",
+    views: "1.1K",
+    date: "2 weeks ago",
+    videoUrl: "./test-vertical-video.mp4"
+  },
+  {
+    title: "Service Comparison Insights",
+    description: "Choose the right service for you.",
+    views: "2.7K",
+    date: "3 weeks ago",
+    videoUrl: "./test-vertical-video.mp4"
+  },
+  {
+    title: "Customer Interview",
+    description: "See real stories from clients.",
+    views: "892",
+    date: "3 weeks ago",
+    videoUrl: "./test-vertical-video.mp4"
+  }
+];
+
+function openVideoModal(index) {
+  const modal = document.getElementById('videoModal');
+  const modalVideo = document.getElementById('modalVideo');
+  const modalTitle = document.getElementById('modalVideoTitle');
+  const modalDescription = document.getElementById('modalVideoDescription');
+  const modalViews = document.getElementById('modalVideoViews');
+  const modalDate = document.getElementById('modalVideoDate');
+
+  const video = videoData[index];
+  modalVideo.querySelector('source').src = video.videoUrl;
+  modalVideo.load();
+  modalVideo.play();
+
+  modalTitle.textContent = video.title;
+  modalDescription.textContent = video.description;
+  modalViews.textContent = video.views + ' views';
+  modalDate.textContent = video.date;
+
+  modal.style.display = 'flex';
+}
+
+function closeVideoModal() {
+  const modal = document.getElementById('videoModal');
+  const modalVideo = document.getElementById('modalVideo');
+  modalVideo.pause();
+  modalVideo.querySelector('source').src = '';
+  modal.style.display = 'none';
+}
+</script>
+
+
+
+
+
+
+
+
+
 
                     <!-- Service Providers Grid -->
                     <section class="services-section">
@@ -1159,5 +1374,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <!-- <script src="script-video.js"></script> -->
 </body>
 </html>
