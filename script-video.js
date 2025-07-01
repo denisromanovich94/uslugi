@@ -447,3 +447,80 @@ window.openVideoModal = openVideoModal;
 window.closeVideoModal = closeVideoModal;
 window.loadMoreVideos = loadMoreVideos;
 window.toggleFilters = toggleFilters;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// === Modal video swipe navigation ===
+let currentVideoIndex = 0;
+
+// Переопределим openVideoModal, чтобы сохранять индекс
+window.openVideoModal = function(index) {
+  if (!videoModal || !modalVideo || !videoData[index]) return;
+
+  currentVideoIndex = index;
+  const video = videoData[index];
+
+  modalVideoTitle.textContent = video.title;
+  modalVideoDescription.textContent = video.description;
+  modalVideoViews.textContent = `${video.views} views`;
+  modalVideoDate.textContent = video.date;
+
+  modalVideo.src = video.videoUrl;
+  videoModal.style.display = 'flex';
+
+  modalVideo.play().catch(e => console.log('Autoplay prevented:', e));
+};
+
+// Функции листания
+function showNextVideo() {
+  currentVideoIndex = (currentVideoIndex + 1) % videoData.length;
+  window.openVideoModal(currentVideoIndex);
+}
+
+function showPrevVideo() {
+  currentVideoIndex = (currentVideoIndex - 1 + videoData.length) % videoData.length;
+  window.openVideoModal(currentVideoIndex);
+}
+
+// Свайп для мобильного (Y координата)
+let touchStartY = 0;
+modalVideo.addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+});
+modalVideo.addEventListener('touchend', e => {
+  const deltaY = touchStartY - e.changedTouches[0].clientY;
+  if (deltaY > 50) {
+    showNextVideo();
+  } else if (deltaY < -50) {
+    showPrevVideo();
+  }
+});
+
+// Свайп для десктопа (X координата)
+let mouseStartX = 0;
+modalVideo.addEventListener('mousedown', e => {
+  mouseStartX = e.clientX;
+});
+modalVideo.addEventListener('mouseup', e => {
+  const deltaX = mouseStartX - e.clientX;
+  if (deltaX > 50) {
+    showNextVideo();
+  } else if (deltaX < -50) {
+    showPrevVideo();
+  }
+});

@@ -16,7 +16,6 @@
                 <nav class="nav">
                     <a href="index.html" class="nav-link active">Home</a>
                     <a href="profile.html" class="nav-link">Profile creater</a>
-                    <a href="profile-buyer.html" class="nav-link">Profile Buyer</a>
                     <a href="register.html" class="nav-link">Join</a>
                 </nav>
                 <div class="header-actions">
@@ -389,101 +388,7 @@
   </div>
 </section>
 
-<style>
-    .video-modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  justify-content: center;
-  align-items: center;
-}
 
-.video-modal-content {
-  position: relative;
-  background: var(--background-primary);
-  border-radius: 16px;
-  width: 90%;
-  max-width: 460px;
-  max-height: 90vh;
-  box-shadow: var(--shadow-medium);
-  height: 90vh;
-}
-
-.video-modal-header {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.video-modal-header h3 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.modal-close {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: var(--text-secondary);
-  cursor: pointer;
-  padding: 0;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.modal-close:hover {
-  background: var(--background-tertiary);
-  color: var(--text-primary);
-}
-
-.video-player-container {
-  position: absolute;
-  width: 100%;
-  aspect-ratio: 9/16;
-  max-width: 460px;
-  inset: 0;
-  border-radius: 16px;
-  z-index: 2;
-}
-
-.video-player-container video {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-}
-
-.video-modal-info {
-  padding: 1.5rem;
-}
-
-.video-modal-info p {
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.modal-video-meta {
-  display: flex;
-  gap: 2rem;
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-}
-</style>
 
 <script>
     const videoData = [
@@ -573,6 +478,83 @@ function closeVideoModal() {
   modalVideo.querySelector('source').src = '';
   modal.style.display = 'none';
 }
+
+
+
+
+
+
+// === Modal video swipe navigation ===
+let currentVideoIndex = 0;
+
+// Переопределим openVideoModal, чтобы сохранять индекс
+window.openVideoModal = function(index) {
+  if (!videoModal || !modalVideo || !videoData[index]) return;
+
+  currentVideoIndex = index;
+  const video = videoData[index];
+
+  modalVideoTitle.textContent = video.title;
+  modalVideoDescription.textContent = video.description;
+  modalVideoViews.textContent = `${video.views} views`;
+  modalVideoDate.textContent = video.date;
+
+  modalVideo.src = video.videoUrl;
+  videoModal.style.display = 'flex';
+
+  modalVideo.play().catch(e => console.log('Autoplay prevented:', e));
+};
+
+// Функции листания
+function showNextVideo() {
+  currentVideoIndex = (currentVideoIndex + 1) % videoData.length;
+  window.openVideoModal(currentVideoIndex);
+}
+
+function showPrevVideo() {
+  currentVideoIndex = (currentVideoIndex - 1 + videoData.length) % videoData.length;
+  window.openVideoModal(currentVideoIndex);
+}
+
+// Свайп для мобильного (Y координата)
+let touchStartY = 0;
+modalVideo.addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+});
+modalVideo.addEventListener('touchend', e => {
+  const deltaY = touchStartY - e.changedTouches[0].clientY;
+  if (deltaY > 50) {
+    showNextVideo();
+  } else if (deltaY < -50) {
+    showPrevVideo();
+  }
+});
+
+// Свайп для десктопа (X координата)
+let mouseStartX = 0;
+modalVideo.addEventListener('mousedown', e => {
+  mouseStartX = e.clientX;
+});
+modalVideo.addEventListener('mouseup', e => {
+  const deltaX = mouseStartX - e.clientX;
+  if (deltaX > 50) {
+    showNextVideo();
+  } else if (deltaX < -50) {
+    showPrevVideo();
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 
