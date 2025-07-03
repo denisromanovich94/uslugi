@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - ServiceHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .chat-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            height: calc(100vh - 120px);
+            background: var(--background-secondary);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            margin: 2rem 0;
+        }
+        
+        .chat-sidebar {
+            background: var(--background-primary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .chat-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        
+        .chat-search {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .conversations-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .conversation-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .conversation-item:hover {
+            background: var(--background-secondary);
+        }
+        
+        .conversation-item.active {
+            background: var(--background-tertiary);
+            border-right: 3px solid var(--primary-color);
+        }
+        
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-secondary);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .conversation-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .conversation-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .conversation-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .conversation-preview {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .conversation-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.25rem;
+        }
+        
+        .conversation-time {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .unread-badge {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .chat-main {
+            display: flex;
+            flex-direction: column;
+            background: var(--background-primary);
+        }
+        
+        .chat-main-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--background-secondary);
+        }
+        
+        .chat-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            overflow: hidden;
+        }
+        
+        .chat-user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .chat-user-info h3 {
+            margin: 0;
+            color: var(--text-primary);
+        }
+        
+        .chat-user-status {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        
+        .chat-actions {
+            margin-left: auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .chat-action-btn {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--background-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .chat-action-btn:hover {
+            background: var(--background-tertiary);
+        }
+        
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .message {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 70%;
+        }
+        
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .message-content {
+            background: var(--background-secondary);
+            padding: 0.75rem 1rem;
+            border-radius: 16px;
+            position: relative;
+        }
+        
+        .message.sent .message-content {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .message-text {
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .message-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+        
+        .message.sent .message-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .message-input-container {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--background-secondary);
+        }
+        
+        .message-input-form {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            background: var(--background-primary);
+            color: var(--text-primary);
+            resize: none;
+            max-height: 100px;
+            outline: none;
+        }
+        
+        .message-input:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .send-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .empty-chat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+        
+        .empty-chat-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .chat-container {
+                grid-template-columns: 1fr;
+                height: calc(100vh - 80px);
+                margin: 1rem 0;
+            }
+            
+            .chat-sidebar {
+                display: none;
+            }
+            
+            .chat-sidebar.mobile-open {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                z-index: 1000;
+            }
+            
+            .mobile-chat-toggle {
+                display: block;
+                padding: 0.5rem;
+                background: var(--background-secondary);
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                cursor: pointer;
+            }
+        }
+        
+        .mobile-chat-toggle {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="chat.html" class="nav-link active">Messages</a>
+                    <a href="support.html" class="nav-link">Support</a>
+                    <a href="services.html" class="nav-link">Services</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="chat-container">
+                <div class="chat-sidebar" id="chatSidebar">
+                    <div class="chat-header">
+                        <h2>Messages</h2>
+                    </div>
+                    
+                    <div class="chat-search">
+                        <input type="text" class="search-input" placeholder="Search conversations..." id="conversationSearch">
+                    </div>
+                    
+                    <div class="conversations-list" id="conversationsList">
+                        <div class="conversation-item active" onclick="selectConversation(1)">
+                            <div class="conversation-avatar">
+                                <img src="img/1.jpg" alt="Sarah Johnson">
+                            </div>
+                            <div class="conversation-info">
+                                <div class="conversation-name">Sarah Johnson</div>
+                                <div class="conversation-preview">Thanks for the great service!</div>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">2m</div>
+                                <div class="unread-badge">2</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" onclick="selectConversation(2)">
+                            <div class="conversation-avatar">
+                                <img src="img/2.jpg" alt="Mike Chen">
+                            </div>
+                            <div class="conversation-info">
+                                <div class="conversation-name">Mike Chen</div>
+                                <div class="conversation-preview">When can we schedule the meeting?</div>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">1h</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" onclick="selectConversation(3)">
+                            <div class="conversation-avatar">
+                                <img src="img/3.jpg" alt="Emma Wilson">
+                            </div>
+                            <div class="conversation-info">
+                                <div class="conversation-name">Emma Wilson</div>
+                                <div class="conversation-preview">I need help with my project</div>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">3h</div>
+                                <div class="unread-badge">1</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" onclick="selectConversation(4)">
+                            <div class="conversation-avatar">
+                                <img src="img/4.jpg" alt="David Brown">
+                            </div>
+                            <div class="conversation-info">
+                                <div class="conversation-name">David Brown</div>
+                                <div class="conversation-preview">Payment has been processed</div>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">1d</div>
+                            </div>
+                        </div>
+                        
+                        <div class="conversation-item" onclick="selectConversation(5)">
+                            <div class="conversation-avatar">
+                                <img src="img/5.jpg" alt="Lisa Garcia">
+                            </div>
+                            <div class="conversation-info">
+                                <div class="conversation-name">Lisa Garcia</div>
+                                <div class="conversation-preview">Can you send me the files?</div>
+                            </div>
+                            <div class="conversation-meta">
+                                <div class="conversation-time">2d</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-main">
+                    <div class="chat-main-header">
+                        <button class="mobile-chat-toggle" onclick="toggleMobileSidebar()">☰</button>
+                        <div class="chat-user-avatar">
+                            <img src="img/1.jpg" alt="Sarah Johnson" id="currentUserAvatar">
+                        </div>
+                        <div class="chat-user-info">
+                            <h3 id="currentUserName">Sarah Johnson</h3>
+                            <div class="chat-user-status" id="currentUserStatus">Online</div>
+                        </div>
+                        <div class="chat-actions">
+                            <button class="chat-action-btn" onclick="startVideoCall()">📹</button>
+                            <button class="chat-action-btn" onclick="startVoiceCall()">📞</button>
+                            <button class="chat-action-btn" onclick="showUserProfile()">👤</button>
+                        </div>
+                    </div>
+                    
+                    <div class="messages-container" id="messagesContainer">
+                        <div class="message">
+                            <div class="message-avatar">
+                                <img src="img/1.jpg" alt="Sarah">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">Hi! I'm interested in your web design services. Can you tell me more about your process?</p>
+                                <div class="message-time">10:30 AM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="message sent">
+                            <div class="message-avatar">
+                                <img src="img/2.jpg" alt="You">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">Hello Sarah! I'd be happy to help you with your web design project. I typically start with understanding your requirements and then create wireframes and mockups.</p>
+                                <div class="message-time">10:32 AM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="message">
+                            <div class="message-avatar">
+                                <img src="img/1.jpg" alt="Sarah">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">That sounds great! What's your typical timeline for a project?</p>
+                                <div class="message-time">10:35 AM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="message sent">
+                            <div class="message-avatar">
+                                <img src="img/2.jpg" alt="You">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">It depends on the complexity, but typically 2-4 weeks for a complete website. I'll provide you with a detailed timeline after we discuss your specific needs.</p>
+                                <div class="message-time">10:37 AM</div>
+                            </div>
+                        </div>
+                        
+                        <div class="message">
+                            <div class="message-avatar">
+                                <img src="img/1.jpg" alt="Sarah">
+                            </div>
+                            <div class="message-content">
+                                <p class="message-text">Thanks for the great service!</p>
+                                <div class="message-time">2 minutes ago</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="message-input-container">
+                        <form class="message-input-form" id="messageForm">
+                            <textarea class="message-input" id="messageInput" placeholder="Type your message..." rows="1"></textarea>
+                            <button type="submit" class="send-btn" id="sendBtn">Send</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentConversationId = 1;
+        
+        const conversations = {
+            1: {
+                name: "Sarah Johnson",
+                avatar: "img/1.jpg",
+                status: "Online",
+                messages: [
+                    { id: 1, text: "Hi! I'm interested in your web design services. Can you tell me more about your process?", time: "10:30 AM", sent: false },
+                    { id: 2, text: "Hello Sarah! I'd be happy to help you with your web design project. I typically start with understanding your requirements and then create wireframes and mockups.", time: "10:32 AM", sent: true },
+                    { id: 3, text: "That sounds great! What's your typical timeline for a project?", time: "10:35 AM", sent: false },
+                    { id: 4, text: "It depends on the complexity, but typically 2-4 weeks for a complete website. I'll provide you with a detailed timeline after we discuss your specific needs.", time: "10:37 AM", sent: true },
+                    { id: 5, text: "Thanks for the great service!", time: "2 minutes ago", sent: false }
+                ]
+            },
+            2: {
+                name: "Mike Chen",
+                avatar: "img/2.jpg",
+                status: "Away",
+                messages: [
+                    { id: 1, text: "When can we schedule the meeting?", time: "1 hour ago", sent: false },
+                    { id: 2, text: "I'm available tomorrow afternoon. How about 2 PM?", time: "45 minutes ago", sent: true }
+                ]
+            },
+            3: {
+                name: "Emma Wilson",
+                avatar: "img/3.jpg",
+                status: "Online",
+                messages: [
+                    { id: 1, text: "I need help with my project", time: "3 hours ago", sent: false },
+                    { id: 2, text: "Sure! What kind of help do you need?", time: "2 hours ago", sent: true }
+                ]
+            }
+        };
+
+        // Theme functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Conversation selection
+        function selectConversation(id) {
+            currentConversationId = id;
+            
+            // Update active conversation in sidebar
+            document.querySelectorAll('.conversation-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Update chat header
+            const conversation = conversations[id];
+            if (conversation) {
+                document.getElementById('currentUserName').textContent = conversation.name;
+                document.getElementById('currentUserAvatar').src = conversation.avatar;
+                document.getElementById('currentUserStatus').textContent = conversation.status;
+                
+                // Load messages
+                loadMessages(id);
+            }
+            
+            // Hide sidebar on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('chatSidebar').classList.remove('mobile-open');
+            }
+        }
+
+        // Load messages for conversation
+        function loadMessages(conversationId) {
+            const conversation = conversations[conversationId];
+            const container = document.getElementById('messagesContainer');
+            
+            if (!conversation) {
+                container.innerHTML = '<div class="empty-chat"><div class="empty-chat-icon">💬</div><h3>No messages yet</h3><p>Start a conversation!</p></div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            conversation.messages.forEach(message => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${message.sent ? 'sent' : ''}`;
+                
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <img src="${message.sent ? 'img/2.jpg' : conversation.avatar}" alt="Avatar">
+                    </div>
+                    <div class="message-content">
+                        <p class="message-text">${message.text}</p>
+                        <div class="message-time">${message.time}</div>
+                    </div>
+                `;
+                
+                container.appendChild(messageDiv);
+            });
+            
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Send message
+        function sendMessage(event) {
+            event.preventDefault();
+            
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            // Add message to conversation
+            if (!conversations[currentConversationId]) {
+                conversations[currentConversationId] = { messages: [] };
+            }
+            
+            const newMessage = {
+                id: Date.now(),
+                text: text,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                sent: true
+            };
+            
+            conversations[currentConversationId].messages.push(newMessage);
+            
+            // Clear input
+            input.value = '';
+            
+            // Reload messages
+            loadMessages(currentConversationId);
+            
+            // Simulate response after 2 seconds
+            setTimeout(() => {
+                const responses = [
+                    "Thanks for your message!",
+                    "I'll get back to you soon.",
+                    "That sounds good to me.",
+                    "Let me check and confirm.",
+                    "Perfect! Looking forward to it."
+                ];
+                
+                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                
+                conversations[currentConversationId].messages.push({
+                    id: Date.now(),
+                    text: randomResponse,
+                    time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    sent: false
+                });
+                
+                loadMessages(currentConversationId);
+            }, 2000);
+        }
+
+        // Mobile sidebar toggle
+        function toggleMobileSidebar() {
+            document.getElementById('chatSidebar').classList.toggle('mobile-open');
+        }
+
+        // Chat actions
+        function startVideoCall() {
+            alert('Starting video call...');
+        }
+
+        function startVoiceCall() {
+            alert('Starting voice call...');
+        }
+
+        function showUserProfile() {
+            alert('Showing user profile...');
+        }
+
+        // Search conversations
+        function searchConversations() {
+            const searchTerm = document.getElementById('conversationSearch').value.toLowerCase();
+            const conversations = document.querySelectorAll('.conversation-item');
+            
+            conversations.forEach(conversation => {
+                const name = conversation.querySelector('.conversation-name').textContent.toLowerCase();
+                const preview = conversation.querySelector('.conversation-preview').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || preview.includes(searchTerm)) {
+                    conversation.style.display = 'flex';
+                } else {
+                    conversation.style.display = 'none';
+                }
+            });
+        }
+
+        // Auto-resize textarea
+        function autoResizeTextarea() {
+            const textarea = document.getElementById('messageInput');
+            textarea.style.height = 'auto';
+            textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+        }
+
+        // Initialize
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('messageForm').addEventListener('submit', sendMessage);
+        document.getElementById('conversationSearch').addEventListener('input', searchConversations);
+        document.getElementById('messageInput').addEventListener('input', autoResizeTextarea);
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            loadMessages(currentConversationId);
+        });
+    </script>
+</body>
+</html>

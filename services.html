@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Services - ServiceHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .services-hero {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .services-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .services-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .services-content {
+            padding: 4rem 0;
+        }
+        
+        .services-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .category-card {
+            background: var(--background-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .category-card h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .category-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .category-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            color: #48bb78;
+            font-weight: bold;
+        }
+        
+        .purchase-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .purchase-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .premium-services {
+            background: var(--background-secondary);
+            border-radius: 16px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        
+        .premium-services h2 {
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .premium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .premium-card {
+            background: var(--background-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-card.featured {
+            border: 2px solid var(--primary-color);
+        }
+        
+        .premium-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 1rem;
+            right: -2rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 3rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .premium-card h4 {
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .premium-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .premium-period {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        
+        .add-ons-section {
+            margin-bottom: 4rem;
+        }
+        
+        .add-ons-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text-primary);
+        }
+        
+        .add-ons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .add-on-card {
+            background: var(--background-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-light);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .add-on-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .add-on-icon {
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .add-on-info {
+            flex: 1;
+        }
+        
+        .add-on-info h4 {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .add-on-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .add-on-price {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .add-on-btn {
+            padding: 0.5rem 1rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+        
+        .add-on-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .cart-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-medium);
+            transition: transform 0.2s ease;
+            z-index: 1000;
+        }
+        
+        .cart-widget:hover {
+            transform: scale(1.1);
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #f56565;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: var(--background-primary);
+            border-radius: 16px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 768px) {
+            .services-hero {
+                padding: 2rem 0;
+            }
+            
+            .services-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .services-content {
+                padding: 2rem 0;
+            }
+            
+            .premium-services {
+                padding: 2rem;
+            }
+            
+            .category-card,
+            .premium-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="chat.html" class="nav-link">Messages</a>
+                    <a href="support.html" class="nav-link">Support</a>
+                    <a href="services.html" class="nav-link active">Services</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="services-hero">
+        <div class="container">
+            <h1>Boost Your Success</h1>
+            <p>Enhance your ServiceHub experience with our premium services and add-ons</p>
+        </div>
+    </section>
+
+    <main class="main">
+        <div class="container">
+            <div class="services-content">
+                <!-- Premium Services -->
+                <div class="premium-services">
+                    <h2>Premium Membership Plans</h2>
+                    <p>Unlock advanced features and grow your business faster</p>
+                    
+                    <div class="premium-grid">
+                        <div class="premium-card">
+                            <h4>Basic Plus</h4>
+                            <div class="premium-price">$9.99</div>
+                            <div class="premium-period">per month</div>
+                            <ul class="features-list">
+                                <li>Priority customer support</li>
+                                <li>Advanced analytics</li>
+                                <li>5 featured listings</li>
+                                <li>Custom profile badge</li>
+                            </ul>
+                            <button class="purchase-btn" onclick="addToCart('Basic Plus', 9.99)">Choose Plan</button>
+                        </div>
+                        
+                        <div class="premium-card featured">
+                            <h4>Professional</h4>
+                            <div class="premium-price">$19.99</div>
+                            <div class="premium-period">per month</div>
+                            <ul class="features-list">
+                                <li>Everything in Basic Plus</li>
+                                <li>Unlimited featured listings</li>
+                                <li>Advanced SEO tools</li>
+                                <li>Priority in search results</li>
+                                <li>Custom portfolio themes</li>
+                            </ul>
+                            <button class="purchase-btn" onclick="addToCart('Professional', 19.99)">Choose Plan</button>
+                        </div>
+                        
+                        <div class="premium-card">
+                            <h4>Enterprise</h4>
+                            <div class="premium-price">$49.99</div>
+                            <div class="premium-period">per month</div>
+                            <ul class="features-list">
+                                <li>Everything in Professional</li>
+                                <li>Dedicated account manager</li>
+                                <li>White-label solutions</li>
+                                <li>API access</li>
+                                <li>Custom integrations</li>
+                            </ul>
+                            <button class="purchase-btn" onclick="addToCart('Enterprise', 49.99)">Choose Plan</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Categories -->
+                <div class="services-categories">
+                    <div class="category-card" onclick="showCategoryDetails('marketing')">
+                        <span class="category-icon">📈</span>
+                        <h3>Marketing Boost</h3>
+                        <p>Increase your visibility and attract more customers with our marketing services</p>
+                        <div class="category-price">Starting at $29</div>
+                        <ul class="features-list">
+                            <li>Social media promotion</li>
+                            <li>Featured placement</li>
+                            <li>Email marketing campaigns</li>
+                            <li>SEO optimization</li>
+                        </ul>
+                        <button class="purchase-btn" onclick="addToCart('Marketing Boost', 29)">Get Started</button>
+                    </div>
+                    
+                    <div class="category-card" onclick="showCategoryDetails('verification')">
+                        <span class="category-icon">✅</span>
+                        <h3>Premium Verification</h3>
+                        <p>Build trust with customers through our comprehensive verification process</p>
+                        <div class="category-price">$15 one-time</div>
+                        <ul class="features-list">
+                            <li>Identity verification</li>
+                            <li>Skill assessment</li>
+                            <li>Background check</li>
+                            <li>Verified badge</li>
+                        </ul>
+                        <button class="purchase-btn" onclick="addToCart('Premium Verification', 15)">Get Verified</button>
+                    </div>
+                    
+                    <div class="category-card" onclick="showCategoryDetails('analytics')">
+                        <span class="category-icon">📊</span>
+                        <h3>Advanced Analytics</h3>
+                        <p>Get detailed insights into your performance and customer behavior</p>
+                        <div class="category-price">$12/month</div>
+                        <ul class="features-list">
+                            <li>Detailed performance reports</li>
+                            <li>Customer insights</li>
+                            <li>Revenue tracking</li>
+                            <li>Competitor analysis</li>
+                        </ul>
+                        <button class="purchase-btn" onclick="addToCart('Advanced Analytics', 12)">Subscribe</button>
+                    </div>
+                </div>
+
+                <!-- Add-ons Section -->
+                <div class="add-ons-section">
+                    <h2>Popular Add-ons</h2>
+                    
+                    <div class="add-ons-grid">
+                        <div class="add-on-card">
+                            <span class="add-on-icon">🎨</span>
+                            <div class="add-on-info">
+                                <h4>Custom Profile Design</h4>
+                                <p>Stand out with a professionally designed profile</p>
+                                <div class="add-on-price">$25</div>
+                            </div>
+                            <button class="add-on-btn" onclick="addToCart('Custom Profile Design', 25)">Add</button>
+                        </div>
+                        
+                        <div class="add-on-card">
+                            <span class="add-on-icon">📱</span>
+                            <div class="add-on-info">
+                                <h4>Mobile App Priority</h4>
+                                <p>Get priority notifications on mobile app</p>
+                                <div class="add-on-price">$5/month</div>
+                            </div>
+                            <button class="add-on-btn" onclick="addToCart('Mobile App Priority', 5)">Add</button>
+                        </div>
+                        
+                        <div class="add-on-card">
+                            <span class="add-on-icon">🔒</span>
+                            <div class="add-on-info">
+                                <h4>Enhanced Security</h4>
+                                <p>Two-factor authentication and security monitoring</p>
+                                <div class="add-on-price">$8/month</div>
+                            </div>
+                            <button class="add-on-btn" onclick="addToCart('Enhanced Security', 8)">Add</button>
+                        </div>
+                        
+                        <div class="add-on-card">
+                            <span class="add-on-icon">💬</span>
+                            <div class="add-on-info">
+                                <h4>Priority Support</h4>
+                                <p>24/7 priority customer support access</p>
+                                <div class="add-on-price">$15/month</div>
+                            </div>
+                            <button class="add-on-btn" onclick="addToCart('Priority Support', 15)">Add</button>
+                        </div>
+                        
+                        <div class="add-on-card">
+                            <span class="add-on-icon">📈</span>
+                            <div class="add-on-info">
+                                <h4>Performance Coaching</h4>
+                                <p>One-on-one coaching to improve your success rate</p>
+                                <div class="add-on-price">$99</div>
+                            </div>
+                            <button class="add-on-btn" onclick="addToCart('Performance Coaching', 99)">Add</button>
+                        </div>
+                        
+                        <div class="add-on-card">
+                            <span class="add-on-icon">🎯</span>
+                            <div class="add-on-info">
+                                <h4>Targeted Advertising</h4>
+                                <p>Promote your services to specific audiences</p>
+                                <div class="add-on-price">$35/month</div>
+                            </div>
+                            <button class="add-on-btn" onclick="addToCart('Targeted Advertising', 35)">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Shopping Cart Widget -->
+    <button class="cart-widget" onclick="openCart()">
+        🛒
+        <span class="cart-badge" id="cartBadge">0</span>
+    </button>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCart()">&times;</button>
+            <h3>Shopping Cart</h3>
+            
+            <div class="cart-items" id="cartItems">
+                <p>Your cart is empty</p>
+            </div>
+            
+            <div class="cart-total" id="cartTotal">Total: $0.00</div>
+            
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ServiceHub</h4>
+                    <p>Your trusted marketplace for professional services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Contact</a>
+                    <a href="support.html" class="footer-link">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cart = [];
+        let cartTotal = 0;
+
+        // Theme functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Cart functionality
+        function addToCart(itemName, price) {
+            const existingItem = cart.find(item => item.name === itemName);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    name: itemName,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            updateCartDisplay();
+            showAddedToCartMessage(itemName);
+        }
+
+        function removeFromCart(itemName) {
+            cart = cart.filter(item => item.name !== itemName);
+            updateCartDisplay();
+        }
+
+        function updateCartDisplay() {
+            const cartBadge = document.getElementById('cartBadge');
+            const cartItems = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            // Update badge
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartBadge.textContent = totalItems;
+            cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
+            
+            // Update cart items
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p>Your cart is empty</p>';
+                cartTotal = 0;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            <small>Quantity: ${item.quantity}</small>
+                        </div>
+                        <div>
+                            <strong>$${(item.price * item.quantity).toFixed(2)}</strong>
+                            <button onclick="removeFromCart('${item.name}')" style="margin-left: 1rem; background: #f56565; color: white; border: none; border-radius: 4px; padding: 0.25rem 0.5rem; cursor: pointer;">Remove</button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            }
+            
+            // Update total
+            cartTotalElement.textContent = `Total: $${cartTotal.toFixed(2)}`;
+        }
+
+        function openCart() {
+            document.getElementById('cartModal').style.display = 'flex';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            alert(`Proceeding to checkout with total: $${cartTotal.toFixed(2)}\n\nThis would redirect to a payment processor in a real application.`);
+            
+            // Clear cart after successful checkout
+            cart = [];
+            updateCartDisplay();
+            closeCart();
+        }
+
+        function showAddedToCartMessage(itemName) {
+            // Create a temporary notification
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 2rem;
+                right: 2rem;
+                background: var(--gradient-primary);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                box-shadow: var(--shadow-medium);
+                z-index: 3000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = `${itemName} added to cart!`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function showCategoryDetails(category) {
+            const details = {
+                marketing: 'Our marketing boost service includes social media promotion, featured placement in search results, targeted email campaigns, and SEO optimization to increase your visibility.',
+                verification: 'Premium verification includes comprehensive identity verification, skill assessments, background checks, and a verified badge to build trust with customers.',
+                analytics: 'Advanced analytics provides detailed performance reports, customer behavior insights, revenue tracking, and competitor analysis to help you make data-driven decisions.'
+            };
+            
+            alert(details[category] || 'More details coming soon!');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                closeCart();
+            }
+        }
+
+        // Initialize
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            updateCartDisplay();
+        });
+
+        // Add CSS animation for notifications
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
