@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article - ServiceHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .article-hero {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="lines" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 0 20 L 20 0" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23lines)"/></svg>');
+        }
+        
+        .article-breadcrumb {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 1rem;
+        }
+        
+        .breadcrumb-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .breadcrumb-nav a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .breadcrumb-nav a:hover {
+            opacity: 1;
+        }
+        
+        .article-content {
+            padding: 4rem 0;
+        }
+        
+        .article-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .article-main {
+            background: var(--background-secondary);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: var(--shadow-light);
+            position: relative;
+        }
+        
+        .article-main::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .article-category {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            overflow: hidden;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            color: var(--text-primary);
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .author-info span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .article-date {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .article-stats {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .article-image {
+            width: 100%;
+            height: 400px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .article-body {
+            color: var(--text-primary);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .article-body h2 {
+            font-size: 2rem;
+            margin: 2.5rem 0 1.5rem 0;
+            color: var(--text-primary);
+            position: relative;
+        }
+        
+        .article-body h2::before {
+            content: '';
+            position: absolute;
+            left: -1rem;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+        
+        .article-body h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+            color: var(--text-primary);
+        }
+        
+        .article-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-body blockquote {
+            background: var(--background-primary);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+        
+        .article-body ul,
+        .article-body ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        .article-body li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-body code {
+            background: var(--background-primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+        
+        .article-body pre {
+            background: var(--background-primary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+        
+        .article-tags {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .tag {
+            background: var(--background-primary);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .article-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .sidebar-card {
+            background: var(--background-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+        
+        .sidebar-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .related-articles {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .related-article {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .related-article:hover {
+            background: var(--background-primary);
+            transform: translateY(-2px);
+        }
+        
+        .related-image {
+            width: 80px;
+            height: 60px;
+            border-radius: 8px;
+            background: var(--gradient-secondary);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .related-content h4 {
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .related-date {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        .share-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .share-btn.twitter {
+            background: #1da1f2;
+            color: white;
+            border-color: #1da1f2;
+        }
+        
+        .share-btn.linkedin {
+            background: #0077b5;
+            color: white;
+            border-color: #0077b5;
+        }
+        
+        .share-btn.facebook {
+            background: #1877f2;
+            color: white;
+            border-color: #1877f2;
+        }
+        
+        .share-btn.copy {
+            background: var(--background-primary);
+            color: var(--text-primary);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+        
+        .newsletter-card {
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter-card h3 {
+            color: white;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .newsletter-input {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .newsletter-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .newsletter-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .comments-section {
+            background: var(--background-secondary);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+            box-shadow: var(--shadow-light);
+        }
+        
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .comments-header h3 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+        }
+        
+        .comments-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .comment-form {
+            background: var(--background-primary);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .comment-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .comment-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .comment-submit {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .comment-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+        
+        @media (max-width: 1024px) {
+            .article-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .article-sidebar {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .article-content {
+                padding: 3rem 0;
+            }
+            
+            .article-main {
+                padding: 2rem;
+            }
+            
+            .article-title {
+                font-size: 2.5rem;
+            }
+            
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .article-stats {
+                gap: 1rem;
+            }
+            
+            .article-image {
+                height: 250px;
+            }
+            
+            .article-body {
+                font-size: 1rem;
+            }
+            
+            .article-body h2 {
+                font-size: 1.5rem;
+            }
+            
+            .sidebar-card {
+                padding: 1.5rem;
+            }
+            
+            .comments-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>ServiceHub</h1>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Home</a>
+
+                    <a href="news.html" class="nav-link">News</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </nav>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">🌙</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="article-hero">
+        <div class="container">
+            <div class="article-breadcrumb">
+                <nav class="breadcrumb-nav">
+                    <a href="index.html">Home</a>
+                    <span>→</span>
+                    <a href="news.html">News</a>
+                    <span>→</span>
+                    <span>Article</span>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <main class="main">
+        <div class="container">
+            <div class="article-content">
+                <div class="article-container">
+                    <article class="article-main">
+                        <div class="article-category" id="articleCategory">Platform Updates</div>
+                        
+                        <h1 class="article-title" id="articleTitle">ServiceHub Reaches 1 Million Active Users</h1>
+                        
+                        <div class="article-meta">
+                            <div class="article-author">
+                                
+                                <div class="author-info">
+                                    <h4 id="authorName">Sarah Chen</h4>
+                                    <span id="authorTitle">Head of Communications</span>
+                                </div>
+                            </div>
+                            
+                            <div class="article-date">
+                                <span>📅</span>
+                                <span id="articleDate">December 15, 2024</span>
+                            </div>
+                            
+                            <div class="article-stats">
+                                <div class="stat-item">
+                                    <span>👁️</span>
+                                    <span id="viewCount">5.2k views</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>💬</span>
+                                    <span id="commentCount">89 comments</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span>⏱️</span>
+                                    <span id="readTime">5 min read</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <div class="article-body" id="articleBody">
+                            <p>We're thrilled to announce that ServiceHub has officially reached 1 million active users worldwide. This incredible milestone represents not just numbers, but real people, real connections, and real success stories that have shaped our platform into what it is today.</p>
+                            
+                            <h2>A Journey of Growth and Innovation</h2>
+                            
+                            <p>When we launched ServiceHub three years ago, our vision was simple: create a platform where talented professionals could connect with clients who needed their expertise. What we didn't anticipate was how quickly and organically our community would grow.</p>
+                            
+                            <blockquote>
+                                "Reaching 1 million users is more than a milestone—it's a testament to the trust our community has placed in us and the value we've created together."
+                            </blockquote>
+                            
+                            <p>From our humble beginnings with just 100 beta users, we've grown exponentially while maintaining our core values of quality, trust, and innovation. This growth has been driven by:</p>
+                            
+                            <ul>
+                                <li><strong>Community-first approach:</strong> Every feature we build is designed with our users' needs in mind</li>
+                                <li><strong>Quality assurance:</strong> Our rigorous vetting process ensures only the best professionals join our platform</li>
+                                <li><strong>Continuous innovation:</strong> We're constantly improving our matching algorithms and user experience</li>
+                                <li><strong>Global accessibility:</strong> ServiceHub now operates in over 50 countries worldwide</li>
+                            </ul>
+                            
+                            <h2>What This Means for Our Community</h2>
+                            
+                            <p>Reaching 1 million users isn't just about the numbers—it's about the impact we're making. Here are some key statistics that showcase our community's success:</p>
+                            
+                            <ul>
+                                <li>Over 2.5 million projects completed successfully</li>
+                                <li>95% client satisfaction rate</li>
+                                <li>Average service provider rating of 4.8/5</li>
+                                <li>$500 million in total earnings for service providers</li>
+                                <li>24/7 customer support in 12 languages</li>
+                            </ul>
+                            
+                            <h3>Success Stories That Inspire Us</h3>
+                            
+                            <p>Behind every statistic is a human story. We've seen freelancers build thriving businesses, startups find the perfect team members, and enterprises streamline their operations through our platform. These success stories fuel our passion and drive us to continue innovating.</p>
+                            
+                            <h2>Looking Ahead: What's Next</h2>
+                            
+                            <p>As we celebrate this milestone, we're already looking toward the future. Our roadmap for 2025 includes:</p>
+                            
+                            <ol>
+                                <li><strong>AI-Powered Matching:</strong> Enhanced algorithms that make finding the perfect match even easier</li>
+                                <li><strong>Mobile App 3.0:</strong> A completely redesigned mobile experience</li>
+                                <li><strong>Enterprise Solutions:</strong> Advanced tools for large organizations</li>
+                                <li><strong>Global Expansion:</strong> Entering 20 new markets</li>
+                                <li><strong>Sustainability Initiative:</strong> Carbon-neutral operations by 2026</li>
+                            </ol>
+                            
+                            <h3>Our Commitment to You</h3>
+                            
+                            <p>As we grow, our commitment to our community remains unwavering. We promise to:</p>
+                            
+                            <ul>
+                                <li>Maintain the highest standards of quality and security</li>
+                                <li>Listen to your feedback and implement meaningful changes</li>
+                                <li>Provide transparent communication about platform updates</li>
+                                <li>Support both service providers and clients equally</li>
+                                <li>Continue investing in innovative features that add real value</li>
+                            </ul>
+                            
+                            <h2>Thank You</h2>
+                            
+                            <p>This milestone wouldn't have been possible without each and every member of our community. From the service providers who deliver exceptional work to the clients who trust us with their projects, and from our dedicated team to our investors who believed in our vision—thank you.</p>
+                            
+                            <p>Here's to the next million users and the incredible journey ahead. Together, we're not just building a platform; we're creating the future of work.</p>
+                        </div>
+                        
+                        <div class="article-tags">
+                            <div class="tags-list">
+                                <a href="#" class="tag">#milestone</a>
+                                <a href="#" class="tag">#growth</a>
+                                <a href="#" class="tag">#community</a>
+                                <a href="#" class="tag">#platform</a>
+                                <a href="#" class="tag">#success</a>
+                                <a href="#" class="tag">#innovation</a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <aside class="article-sidebar">
+                        <div class="sidebar-card">
+                            <h3>Share This Article</h3>
+                            <div class="share-buttons">
+                                <a href="#" class="share-btn twitter">
+                                    <span>🐦</span>
+                                    <span>Share on Twitter</span>
+                                </a>
+                                <a href="#" class="share-btn linkedin">
+                                    <span>💼</span>
+                                    <span>Share on LinkedIn</span>
+                                </a>
+                                <a href="#" class="share-btn facebook">
+                                    <span>📘</span>
+                                    <span>Share on Facebook</span>
+                                </a>
+                                <a href="#" class="share-btn copy" onclick="copyLink()">
+                                    <span>🔗</span>
+                                    <span>Copy Link</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar-card">
+                            <h3>Related Articles</h3>
+                            <div class="related-articles">
+                                <a href="article.html?id=2" class="related-article">
+                                    
+                                    <div class="related-content">
+                                        <h4>New AI-Powered Matching System Launches</h4>
+                                        <div class="related-date">Dec 15, 2024</div>
+                                    </div>
+                                </a>
+                                
+                                <a href="article.html?id=3" class="related-article">
+                                    <
+                                    <div class="related-content">
+                                        <h4>ServiceHub Community Awards 2024</h4>
+                                        <div class="related-date">Dec 12, 2024</div>
+                                    </div>
+                                </a>
+                                
+                                <a href="article.html?id=4" class="related-article">
+                                    
+                                    <div class="related-content">
+                                        <h4>Q4 2024: Record-Breaking Growth</h4>
+                                        <div class="related-date">Dec 10, 2024</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="sidebar-card newsletter-card">
+                            <h3>Stay Updated</h3>
+                            <p style="margin-bottom: 1.5rem; opacity: 0.9;">Get the latest news and updates delivered to your inbox.</p>
+                            <form class="newsletter-form" id="sidebarNewsletterForm">
+                                <input type="email" class="newsletter-input" placeholder="Your email address" required>
+                                <button type="submit" class="newsletter-btn">Subscribe</button>
+                            </form>
+                        </div>
+                    </aside>
+                </div>
+                
+                <!-- Comments Section -->
+                <section class="comments-section">
+                    <div class="comments-header">
+                        <h3>Comments</h3>
+                        <div class="comments-count">89 comments</div>
+                    </div>
+                    
+                    <form class="comment-form" id="commentForm">
+                        <textarea class="comment-textarea" placeholder="Share your thoughts about this article..." required></textarea>
+                        <button type="submit" class="comment-submit">Post Comment</button>
+                    </form>
+                    
+                    <div class="comments-list">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Comments will be displayed here. In a real application, this would show user comments with moderation features.</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ServiceHub</h4>
+                    <p>Your trusted marketplace for professional services</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                    <a href="support.html" class="footer-link">Support</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Article data
+        const articles = {
+            1: {
+                category: "Platform Updates",
+                title: "ServiceHub Reaches 1 Million Active Users",
+                author: {
+                    name: "Sarah Chen",
+                    title: "Head of Communications",
+                    avatar: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg"
+                },
+                date: "December 15, 2024",
+                image: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg",
+                views: "5.2k",
+                comments: "89",
+                readTime: "5 min"
+            },
+            2: {
+                category: "Technology",
+                title: "New AI-Powered Matching System Launches",
+                author: {
+                    name: "David Kim",
+                    title: "CTO",
+                    avatar: "https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg"
+                },
+                date: "December 12, 2024",
+                image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg",
+                views: "3.1k",
+                comments: "45",
+                readTime: "7 min"
+            }
+        };
+
+        // Theme functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('themeToggle').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        // Load article based on URL parameter
+        function loadArticle() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id') || '1';
+            const article = articles[articleId];
+            
+            if (article) {
+                document.getElementById('articleCategory').textContent = article.category;
+                document.getElementById('articleTitle').textContent = article.title;
+                document.getElementById('authorName').textContent = article.author.name;
+                document.getElementById('authorTitle').textContent = article.author.title;
+                document.getElementById('authorAvatar').src = article.author.avatar;
+                document.getElementById('articleDate').textContent = article.date;
+                document.getElementById('articleImage').src = article.image;
+                document.getElementById('viewCount').textContent = article.views + ' views';
+                document.getElementById('commentCount').textContent = article.comments + ' comments';
+                document.getElementById('readTime').textContent = article.readTime + ' read';
+                document.title = article.title + ' - ServiceHub';
+            }
+        }
+
+        // Copy link functionality
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
+
+        // Form submissions
+        function handleNewsletterForm(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('.newsletter-input').value;
+            alert(`Thank you for subscribing with ${email}!`);
+            event.target.reset();
+        }
+
+        function handleCommentForm(event) {
+            event.preventDefault();
+            const comment = event.target.querySelector('.comment-textarea').value;
+            alert('Thank you for your comment! It will be reviewed before being published.');
+            event.target.reset();
+        }
+
+        // Initialize
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('sidebarNewsletterForm').addEventListener('submit', handleNewsletterForm);
+        document.getElementById('commentForm').addEventListener('submit', handleCommentForm);
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            loadArticle();
+        });
+    </script>
+</body>
+</html>
