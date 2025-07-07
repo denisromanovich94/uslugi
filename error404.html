@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | ServiceHub</title>
+    <link rel="stylesheet" href="public/css/styles.css">
+    <style>
+        /* Additional 404-specific styles */
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--background-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .error-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .error-number {
+            font-size: 8rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .error-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: slideInUp 0.8s ease-out 0.6s both;
+        }
+
+        .error-btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .error-btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .error-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 51, 0, 0.3);
+        }
+
+        .error-btn-secondary {
+            background: var(--background-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .error-btn-secondary:hover {
+            background: var(--background-tertiary);
+            transform: translateY(-2px);
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            top: 10%;
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            top: 20%;
+            right: 15%;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-secondary);
+            border-radius: 12px;
+            animation-delay: 1s;
+        }
+
+        .shape-3 {
+            bottom: 20%;
+            left: 20%;
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            animation-delay: 2s;
+        }
+
+        .shape-4 {
+            bottom: 30%;
+            right: 10%;
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-secondary);
+            border-radius: 12px;
+            animation-delay: 3s;
+        }
+
+        .suggestions {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--background-secondary);
+            border-radius: 16px;
+            box-shadow: var(--shadow-light);
+            animation: slideInUp 0.8s ease-out 0.8s both;
+        }
+
+        .suggestions h3 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .suggestions-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .suggestion-item {
+            padding: 1rem;
+            background: var(--background-primary);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .suggestion-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary-color);
+        }
+
+        .suggestion-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .suggestion-item p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .error-number {
+                font-size: 6rem;
+            }
+
+            .error-title {
+                font-size: 2rem;
+            }
+
+            .error-description {
+                font-size: 1rem;
+            }
+
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .error-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .suggestions-list {
+                grid-template-columns: 1fr;
+            }
+
+            .shape {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-content {
+                padding: 1rem;
+            }
+
+            .error-number {
+                font-size: 4rem;
+            }
+
+            .error-title {
+                font-size: 1.5rem;
+            }
+
+            .suggestions {
+                margin-top: 2rem;
+                padding: 1.5rem;
+            }
+        }
+
+        /* Theme toggle positioning for 404 page */
+        .theme-toggle-404 {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--background-secondary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow-light);
+        }
+
+        .theme-toggle-404:hover {
+            transform: rotate(180deg) scale(1.1);
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* Icon styles */
+        .icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <button class="theme-toggle-404" id="themeToggle" aria-label="Toggle theme">🌙</button>
+
+    <div class="error-container">
+        <!-- Floating Background Shapes -->
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+
+        <div class="error-content">
+            <!-- Main Error Display -->
+            <div class="error-number">404</div>
+            <h1 class="error-title">Страница не найдена</h1>
+            <p class="error-description">
+                Извините, но страница, которую вы ищете, не существует. 
+                Возможно, она была перемещена, удалена или вы ввели неправильный адрес.
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="error-actions">
+                <a href="index.html" class="error-btn error-btn-primary">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    На главную
+                </a>
+                <button onclick="goBack()" class="error-btn error-btn-secondary">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Назад
+                </button>
+            </div>
+
+            <!-- Helpful Suggestions -->
+            <div class="suggestions">
+                <h3>Возможно, вас заинтересует:</h3>
+                <div class="suggestions-list">
+                    <a href="index.html" class="suggestion-item">
+                        <h4>Главная страница</h4>
+                        <p>Вернитесь на главную страницу ServiceHub</p>
+                    </a>
+                    <a href="profile.html" class="suggestion-item">
+                        <h4>Создать профиль</h4>
+                        <p>Создайте свой профиль поставщика услуг</p>
+                    </a>
+                    <a href="login.html" class="suggestion-item">
+                        <h4>Войти в аккаунт</h4>
+                        <p>Войдите в свой аккаунт или зарегистрируйтесь</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme functionality
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Event listeners
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        // Initialize theme on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            
+            // Add entrance animation delay
+            setTimeout(() => {
+                document.querySelector('.error-content').style.opacity = '1';
+            }, 100);
+        });
+
+        // Add some interactive effects
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.shape');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.5;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                
+                shape.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === 'Backspace') {
+                goBack();
+            } else if (e.key === 'Enter' || e.key === ' ') {
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Add error reporting (optional)
+        function reportError() {
+            const errorData = {
+                url: window.location.href,
+                referrer: document.referrer,
+                userAgent: navigator.userAgent,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Here you could send error data to your analytics service
+            console.log('404 Error reported:', errorData);
+        }
+
+        // Report the 404 error
+        reportError();
+    </script>
+</body>
+</html>
